@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./Header.module.css"
 
 function Header() {
@@ -7,9 +8,13 @@ function Header() {
             <h5 className={styles.headerTitle}>Songs</h5>
 
             <div>
-                <button>Login</button>
+                <Link to="/signin">
+                    <button>Login</button>
+                </Link>
 
-                <button>Register</button>
+                <Link to="/signup">
+                    <button>Register</button>
+                </Link>
             </div>
 
         </header>

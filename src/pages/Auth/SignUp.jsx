@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styles from "./auth.module.css";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export default function SignUp() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -42,6 +43,8 @@ export default function SignUp() {
             {passwordVisible ? <FaEyeSlash /> : <FaEye />}
           </div>
         </div>
+
+        <p className={styles.label}>~ Already have account <Link to="/signin"><i>Click here</i></Link></p>
 
         <button>Sign Up</button>
 

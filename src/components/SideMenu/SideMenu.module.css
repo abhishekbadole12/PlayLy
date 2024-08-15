@@ -11,37 +11,65 @@
     font-size: 1.75rem;
     font-weight: 700;
     margin-bottom: 2rem;
+    letter-spacing: .5px;
 }
 
 .asideItems {
     list-style: none;
-    cursor: pointer;
 }
 
-.sideMenu .asideItem {
+.asideItem {
     display: flex;
     align-items: center;
-    border-right: 4px solid #1890FF;
     gap: 10px;
     padding: .5rem 1.75rem;
+    cursor: pointer;
+    margin-bottom: 0.25rem;
 }
 
-.asideItem {}
-
 .asideItem p {
-    color: #1890FF;
+    color: var(--primary-text-color);
     font-size: 1.05rem;
-    font-weight: 400;
 }
 
 .asideItem svg {
     font-size: 1.75rem;
 }
 
+.asideItemTitle {
+    padding: 1rem 1.75rem;
+    font-size: .85rem;
+    font-weight: 500;
+    margin: .75rem 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.addPlaylist {
+    margin-left: auto;
+    cursor: pointer;
+}
+
+/* For empty */
+.empty {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 0.75rem;
+    color: var(--secondary-text-color);
+}
+
+/* active Item */
+.activeItem {
+    color: #1890FF;
+    border-right: 4px solid #1890FF;
+}
+
 /* ----------- Footer ( Logout Button) ---------- */
 
 .sideMenu .asideItem:last-child {
     border: none;
+    margin-bottom: 0;
     bottom: 2rem;
     position: fixed;
 }
