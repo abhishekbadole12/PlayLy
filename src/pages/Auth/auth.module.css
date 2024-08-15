@@ -47,13 +47,9 @@
     position: relative;
 }
 
-.passwordContainer input {
-    margin-bottom: 0;
-}
-
 .eyeIcon {
     position: absolute;
-    top: 52%;
+    top: 40%;
     right: 1.25rem;
     transform: translate(50%, -50%);
     cursor: pointer;
@@ -75,7 +71,7 @@
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    margin-top: 1.25rem;
+    margin-top: 0.5rem;
     transition: background-color 0.3s ease;
 }
 
