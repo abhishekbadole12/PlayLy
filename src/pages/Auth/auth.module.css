@@ -1,0 +1,84 @@
+.loginPageContainer {
+    height: 100vh;
+    display: flex;
+    margin-top: 7%;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+}
+
+.login h3 {
+    color: var(--primary-color);
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.login p {
+    color: var(--text-color);
+    font-size: 0.875rem;
+    margin-bottom: 20px;
+}
+
+.inputField {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #E4E8F0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.inputField :focus {
+    border-color: var(--primary-color);
+    outline: none;
+    background-color: #fff;
+}
+
+.passwordContainer {
+    position: relative;
+}
+
+.passwordContainer input {
+    margin-bottom: 0;
+}
+
+.eyeIcon {
+    position: absolute;
+    top: 52%;
+    right: 1.25rem;
+    transform: translate(50%, -50%);
+    cursor: pointer;
+    color: #552583;
+}
+
+.eyeIcon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.login button {
+    width: 100%;
+    padding: 14px 0;
+    border: none;
+    border-radius: 6px;
+    background-color: #552583;
+    color: #FFF;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1.25rem;
+    transition: background-color 0.3s ease;
+}
+
+.login button:hover {
+    background-color: #3e1f66;
+}
