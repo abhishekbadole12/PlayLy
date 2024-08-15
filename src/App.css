@@ -6,8 +6,10 @@
 
 :root {
   --primary-color: #552583;
-  --secondary-color: '';
-  --text-color: #333333;
+  
+  /* text-colors */
+  --primary-text-color: #333;
+  --secondary-text-color: #6c757d;
 }
 
 .App {

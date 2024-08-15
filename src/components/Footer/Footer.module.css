@@ -1,0 +1,115 @@
+/* footer */
+footer {
+    position: fixed;
+    bottom: 2rem;
+}
+
+/* Progress Bar */
+
+.progressBarContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2rem 0;
+}
+
+.progressBar {
+    position: relative;
+}
+
+.backGrey {
+    width: 1184px;
+    height: 10px;
+    border-radius: 100px;
+    opacity: 0.5;
+    background-color: var(--secondary-text-color);
+}
+
+.steps {
+    top: 0;
+    position: absolute;
+    border-radius: 100px;
+    height: 100%;
+    background-color: var(--primary-color);
+}
+
+/* --------  Footer Bottom    ---- */
+
+.footerBottom {
+    margin-top: 1rem;
+    display: flex;
+    position: relative;
+}
+
+.footerBottom {
+    display: flex;
+    align-items: center;
+}
+
+.songName {
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.songImage {
+    width: 90px;
+    height: 90px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-right: 1rem;
+}
+
+.songImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.songDetails {
+    list-style: none;
+}
+
+.songTitle {
+    color: var(--primary-text-color);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.songLabel {
+    font-weight: 400;
+}
+
+.songContent {
+    font-weight: 700;
+}
+
+.songArtist,
+.songDuration {
+    color: var(--secondary-text-color);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* ----------   Buttons   ---------- */
+
+.playLogicButtonContainer {
+    font-size: 3.5rem;
+    display: flex;
+    gap: 16.67px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.playLogicButtonContainer svg {
+    color: var(--secondary-text-color);
+}
+
+.playLogicButtonContainer svg:hover {
+    cursor: pointer;
+    color: var(--primary-text-color);
+}

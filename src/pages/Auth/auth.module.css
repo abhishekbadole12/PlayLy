@@ -22,7 +22,7 @@
 }
 
 .login p {
-    color: var(--text-color);
+    color: var(--primary-text-color);
     font-size: 0.875rem;
     margin-bottom: 20px;
 }
