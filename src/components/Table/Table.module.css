@@ -1,0 +1,79 @@
+table {
+    margin-top: 100px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tbody td {
+    color: var(--seondary-color);
+    font-size: .85rem;
+}
+
+td,
+th {
+    padding: 0.7rem;
+    text-align: left;
+}
+
+th,
+tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.songName {
+    display: flex;
+    align-items: center;
+}
+
+.songImage {
+    width: 65px;
+    height: 65px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-right: 1rem;
+}
+
+.songImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.songDetails {
+    list-style: none;
+}
+
+.songTitle {
+    color: var(--primary-text-color);
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.songLabel {
+    font-weight: 400;
+}
+
+.songContent {
+    font-weight: 500;
+}
+
+.songArtist,
+.songDuration {
+    color: var(--secondary-text-color);
+    font-size: .85rem;
+    margin-bottom: 2px;
+}
+
+/* Table Action Buttons */
+
+.playButton,
+.pauseButton {
+    cursor: pointer;
+    color: #FDB927;
+}
+
+.playButton:hover,
+.pauseButton:hover {
+    color: red;
+}
