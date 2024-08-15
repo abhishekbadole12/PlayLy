@@ -4,21 +4,21 @@ import { BiLogInCircle } from "react-icons/bi";
 
 export default function SideMenu() {
     return (
-        <div className={styles.sideMenu}>
-            <h2>Playly</h2>
+        <aside className={styles.sideMenu}>
+            <h2 className={styles.projectTitle}>Playly</h2>
 
-            <ul>
-                <li>
-                    <CiGrid42 size={25} />
+            <ul className={styles.asideItems}>
+                <li className={styles.asideItem}>
+                    <CiGrid42 />
                     <p>Songs</p>
                 </li>
 
-                <li className={styles.logout}>
-                    <BiLogInCircle size={25} />
+                <li className={styles.asideItem}>
+                    <BiLogInCircle />
                     <p>Logout</p>
                 </li>
             </ul>
 
-        </div>
+        </aside>
     )
 }

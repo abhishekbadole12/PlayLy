@@ -1,49 +1,47 @@
 .sideMenu {
-    min-width: 255px;
+    min-width: 275px;
     height: 100vh;
     box-shadow: -1px 0px 0px 0px rgba(0, 0, 0, 0.05) inset;
+    padding: 2rem 0;
 }
 
-.sideMenu h2 {
+.projectTitle {
     color: var(--primary-color);
     text-align: center;
     font-size: 1.75rem;
     font-weight: 700;
-    margin: 2rem 0;
+    margin-bottom: 2rem;
 }
 
-.sideMenu ul {
+.asideItems {
     list-style: none;
+    cursor: pointer;
 }
 
-.sideMenu li {
+.sideMenu .asideItem {
     display: flex;
     align-items: center;
-    border-right: 3px solid #1890FF;
+    border-right: 4px solid #1890FF;
     gap: 10px;
-    padding: 9px 24px;
+    padding: .5rem 1.75rem;
 }
 
-.sideMenu li p {
+.asideItem {}
+
+.asideItem p {
     color: #1890FF;
-    font-size: 14px;
+    font-size: 1rem;
     font-weight: 400;
 }
 
-/* footer */
-.sideMenu .logout {
-    min-width: 254px;
+.asideItem svg {
+    font-size: 1.5rem;
+}
+
+/* ----------- Footer ( Logout Button) ---------- */
+
+.sideMenu .asideItem:last-child {
     border: none;
-    bottom: 1rem;
+    bottom: 2rem;
     position: fixed;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-}
-
-.sideMenu .logout:hover {
-    border-bottom: 1px solid #ABABAB;
-}
-
-.sideMenu .logout p {
-    color: rgba(0, 0, 0, 0.85);
 }
