@@ -1,0 +1,49 @@
+.sideMenu {
+    min-width: 255px;
+    height: 100vh;
+    box-shadow: -1px 0px 0px 0px rgba(0, 0, 0, 0.05) inset;
+}
+
+.sideMenu h2 {
+    color: var(--primary-color);
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 2rem 0;
+}
+
+.sideMenu ul {
+    list-style: none;
+}
+
+.sideMenu li {
+    display: flex;
+    align-items: center;
+    border-right: 3px solid #1890FF;
+    gap: 10px;
+    padding: 9px 24px;
+}
+
+.sideMenu li p {
+    color: #1890FF;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* footer */
+.sideMenu .logout {
+    min-width: 254px;
+    border: none;
+    bottom: 1rem;
+    position: fixed;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+}
+
+.sideMenu .logout:hover {
+    border-bottom: 1px solid #ABABAB;
+}
+
+.sideMenu .logout p {
+    color: rgba(0, 0, 0, 0.85);
+}
