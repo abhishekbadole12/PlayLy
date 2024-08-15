@@ -10,7 +10,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 2rem 0;
+    margin: 1rem 0;
 }
 
 .progressBar {
@@ -96,7 +96,7 @@ footer {
 /* ----------   Buttons   ---------- */
 
 .playLogicButtonContainer {
-    font-size: 3.5rem;
+    font-size: 3.25rem;
     display: flex;
     gap: 16.67px;
     position: absolute;

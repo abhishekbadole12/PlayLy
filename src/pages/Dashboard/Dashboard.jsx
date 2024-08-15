@@ -1,6 +1,7 @@
 import styles from "./Dashboard.module.css"
 import SideMenu from "../../components/SideMenu/SideMenu";
 import Footer from "../../components/Footer/Footer";
+import Header from "../../components/Header/Header";
 
 export default function Dashboard() {
 
@@ -10,7 +11,8 @@ export default function Dashboard() {
             <SideMenu />
 
             <section>
-
+                
+                <Header />
 
                 <Footer />
 

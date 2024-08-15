@@ -17,3 +17,7 @@
   height: 100vh;
   font-family: 'Roboto', sans-serif;
 }
+
+button{
+  cursor: pointer;
+}

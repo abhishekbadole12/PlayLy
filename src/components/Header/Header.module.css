@@ -1,0 +1,34 @@
+.header {
+    padding: 2rem 3rem;
+    width: 94%;
+    background-color: var(--primary-color);
+    position: absolute;
+    top: 0;
+    border-bottom-left-radius: 75px;
+    border-bottom-right-radius: 75px;
+    display: flex;
+    align-items: center;
+}
+
+.headerTitle {
+    font-size: 1.75rem;
+    color: #fff;
+}
+
+.header div {
+    margin-left: auto;
+    display: flex;
+    gap: 1rem;
+}
+
+.header button {
+    min-width: 75px;
+    text-align: center;
+    letter-spacing: 0.35px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #fff;
+    padding: .5rem;
+}
