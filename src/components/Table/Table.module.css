@@ -1,22 +1,22 @@
-table {
+.table {
     margin-top: 100px;
     width: 100%;
     border-collapse: collapse;
 }
 
-tbody td {
+.tbody td {
     color: var(--seondary-color);
     font-size: .85rem;
 }
 
-td,
-th {
+.table td,
+.table th {
     padding: 0.7rem;
     text-align: left;
 }
 
-th,
-tr {
+.table th,
+.table tr {
     border-bottom: 1px solid #ccc;
 }
 
@@ -67,13 +67,14 @@ tr {
 
 /* Table Action Buttons */
 
-.playButton,
-.pauseButton {
+.playPauseButton svg{
     cursor: pointer;
+}
+
+.playButton {
     color: #FDB927;
 }
 
-.playButton:hover,
-.pauseButton:hover {
-    color: red;
+.pauseButton{
+    color: var(--primary-color);
 }

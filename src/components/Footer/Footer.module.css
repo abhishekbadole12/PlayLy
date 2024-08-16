@@ -2,6 +2,7 @@
 footer {
     position: fixed;
     bottom: 2rem;
+    backdrop-filter: blur(8px);
 }
 
 /* Progress Bar */
@@ -109,7 +110,11 @@ footer {
     color: var(--secondary-text-color);
 }
 
+.pauseButton {
+    color: var(--primary-color);
+}
+
 .playLogicButtonContainer svg:hover {
     cursor: pointer;
-    color: var(--primary-text-color);
+    color: var(--primary-color);
 }
