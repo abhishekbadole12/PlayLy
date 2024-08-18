@@ -1,28 +1,32 @@
-import './App.css'
-import { BrowserRouter as Router, Route, Routes, useSearchParams } from 'react-router-dom'
-import SignIn from './pages/Auth/SignIn'
-import SignUp from './pages/Auth/Signup'
+import { createContext, useMemo, useState } from 'react'
+import { BrowserRouter as Router, Route, Routes, } from 'react-router-dom'
+import Login from './pages/Auth/Login'
+import Register from './pages/Auth/Register'
 import Dashboard from './pages/Dashboard/Dashboard'
-import { createContext, useState } from 'react'
+import './App.css'
+import PrivateRoute from './components/PrivateRoute'
+import { AuthProvider } from './components/AuthContext'
 
 export const UserContext = createContext()
 
 export default function App() {
 
-  const [currentPlayingSongId, setCurrentPlayingSongId] = useState(localStorage.getItem('currentSongId'))
+  const [currentSong, setCurrentSong] = useState(null);
 
   return (
     <div className='App'>
-      <UserContext.Provider value={{ setCurrentPlayingSongId, currentPlayingSongId }}>
-        <Router>
-          <Routes>
-            <Route path='/' element={<Dashboard />} />
-            <Route path='/signin' element={<SignIn />} />
-            <Route path='/signup' element={<SignUp />} />
-            <Route path='/dashboard' element={<Dashboard />} />
-          </Routes>
-        </Router>
-      </UserContext.Provider>
+      <AuthProvider>
+        <UserContext.Provider value={{ currentSong, setCurrentSong }}>
+          <Router>
+            <Routes>
+              <Route path='/' element={<Dashboard />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/dashboard' element={<Dashboard />} />
+            </Routes>
+          </Router>
+        </UserContext.Provider>
+      </AuthProvider>
     </div>
   )
 }

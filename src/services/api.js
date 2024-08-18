@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "http://localhost:5000/api";
+export const URL = "http://localhost:5000/api";
 
 const getSongs = async () => {
   try {
@@ -11,5 +11,14 @@ const getSongs = async () => {
     throw new Error("error getting songs");
   }
 };
+
+const getUserPlaylist = async ( )=>{
+  try{
+const {data}=await axios.get(`${URL}/playlist`)
+  }catch{
+    console.log(error);
+    throw new Error("error getting playlist");
+  }
+}
 
 export { getSongs };

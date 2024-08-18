@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import songImg from "../../assets/song-img.jpg"
 import styles from "./Footer.module.css"
 import { MdOutlineSkipPrevious, MdOutlineSkipNext } from "react-icons/md";
@@ -8,18 +8,25 @@ import { FaCirclePlay, FaCirclePause } from "react-icons/fa6";
 import { BsPlayFill } from "react-icons/bs";
 import { Howl, Howler } from 'howler';
 import { UserContext } from "../../App";
+import axios from "axios";
 
-export default function Footer({ currentPlayingSong = { name: 'not available', duration: '00:00', singer: 'not available' } }) {
+export default function Footer({ isPlaying, setIsPlaying }) {
 
-    const { currentPlayingSongId } = useContext(UserContext);
+    const { currentSong } = useContext(UserContext);
 
-    const [currentSong, setCurrentSong] = useState(currentPlayingSong);
+    const audioRef = useRef(new Audio());
+
+    const [sound, setSound] = useState(null);
+
 
     const playAudio = () => {
-        // function
-    }
+        
+    };
 
-    console.log(currentPlayingSong);
+    const handlePause = () => {
+
+    };
+
 
     return (
         <footer>
@@ -29,7 +36,7 @@ export default function Footer({ currentPlayingSong = { name: 'not available', d
 
                 <div className={styles.progressBar}>
                     <div className={styles.backGrey} />
-                    <div className={styles.steps} style={{ width: `${50}%` }} />
+                    <div className={styles.steps} style={{ width: `${50}% ` }} />
                 </div>
 
             </div>
@@ -45,17 +52,17 @@ export default function Footer({ currentPlayingSong = { name: 'not available', d
                     <ul className={styles.songDetails}>
                         <li>
                             <h5 className={styles.songTitle}>
-                                <span className={styles.songLabel}>Name:</span> <span className={styles.songContent}>{currentPlayingSong.name}</span>
+                                <span className={styles.songLabel}>Name:</span> <span className={styles.songContent}>{currentSong?.name}</span>
                             </h5>
                         </li>
                         <li>
                             <p className={styles.songArtist}>
-                                <span className={styles.songLabel}>Singer:</span> {currentPlayingSong.singer}
+                                <span className={styles.songLabel}>Singer:</span> {currentSong?.singer}
                             </p>
                         </li>
                         <li>
                             <p className={styles.songDuration}>
-                                <span className={styles.songLabel}>Duration: {currentPlayingSong.duration}</span>
+                                <span className={styles.songLabel}>Duration: {currentSong?.duration}</span>
                             </p>
                         </li>
                     </ul>
@@ -64,13 +71,15 @@ export default function Footer({ currentPlayingSong = { name: 'not available', d
                 <div className={styles.playLogicButtonContainer}>
                     <MdOutlineSkipPrevious className={styles.playLogicButton} />
 
-                    {currentPlayingSong.name !== 'not available' ?
-                        // <BsPlayFill className={styles.playLogicButton} onClick={playAudio} />
-                        <FaCirclePause className={`${styles.playLogicButton} ${currentPlayingSong ? styles.pauseButton : ''}`} />
-                        :
-                        // <AiOutlinePause className={styles.playLogicButton} onClick={playAudio} />
+                    {currentSong !== null ? (
+                        isPlaying ? (
+                            <FaCirclePause className={styles.playLogicButton} onClick={handlePause} />
+                        ) : (
+                            <FaCirclePlay className={styles.playLogicButton} onClick={playAudio} />
+                        )
+                    ) : (
                         <FaCirclePlay className={styles.playLogicButton} />
-                    }
+                    )}
 
                     <MdOutlineSkipNext className={styles.playLogicButton} />
                 </div>

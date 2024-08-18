@@ -2,9 +2,9 @@ import styles from './Table.module.css'
 import songImg from "../../assets/song-img.jpg"
 import { FaCirclePlay, FaCirclePause } from "react-icons/fa6";
 
-export default function TableRow({ song, currentPlayingSongId, handlePlayIconClick }) {
+export default function TableRow({ song, isPlaying, currentSong, handlePlayIcon }) {
 
-    const { _id, url, duration, singer, name } = song;
+    const { _id, duration, singer, name } = song;
 
     return (
         <tr>
@@ -15,17 +15,17 @@ export default function TableRow({ song, currentPlayingSongId, handlePlayIconCli
                 <ul className={styles.songDetails}>
                     <li>
                         <h5 className={styles.songTitle}>
-                            <span className={styles.songLabel}>Name:</span> <span className={styles.songContent}>{name}</span>
+                            {name}
                         </h5>
                     </li>
                     <li>
                         <p className={styles.songArtist}>
-                            <span className={styles.songLabel}>Singer:</span> {singer}
+                            {singer}
                         </p>
                     </li>
                     <li>
                         <p className={styles.songDuration}>
-                            <span className={styles.songLabel}>Duration: {duration}</span>
+                            {duration}
                         </p>
                     </li>
                 </ul>
@@ -36,8 +36,10 @@ export default function TableRow({ song, currentPlayingSongId, handlePlayIconCli
             <td>17/06/2021</td>
 
             <td className={styles.playPauseButton}>
-                {currentPlayingSongId === _id ? <FaCirclePause size={40} className={styles.pauseButton} onClick={() => handlePlayIconClick(_id)} />
-                    : <FaCirclePlay size={40} className={styles.playButton} onClick={() => handlePlayIconClick(_id)} />}
+                {currentSong && isPlaying && currentSong._id === _id ?
+                    <FaCirclePause size={40} className={styles.pauseButton} onClick={() => handlePlayIcon(_id)} />
+                    :
+                    <FaCirclePlay size={40} className={styles.playButton} onClick={() => handlePlayIcon(_id)} />}
             </td>
 
         </tr>

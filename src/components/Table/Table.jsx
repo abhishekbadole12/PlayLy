@@ -1,39 +1,37 @@
+import { useContext } from "react";
 import styles from "./Table.module.css"
+import TableHead from "./TableHead";
 import TableRow from "./TableRow";
-import { useContext, useEffect } from "react";
 import { UserContext } from "../../App"
 
-export default function Table({ songs }) {
+export default function Table({ songs, isPlaying, setIsPlaying }) {
 
-    const { currentPlayingSongId, setCurrentPlayingSongId } = useContext(UserContext);
+    const { currentSong, setCurrentSong } = useContext(UserContext);
 
-    const handlePlayIconClick = (id) => {
-        const currentSongId = localStorage.getItem('currentSongId');
-    
-        if (currentSongId === id) {
-            localStorage.removeItem('currentSongId');
-            setCurrentPlayingSongId(null);
-        } else {
-            localStorage.setItem('currentSongId', id);
-            setCurrentPlayingSongId(id);
-        }
+    // handle table play button
+    const handlePlayIcon = (id) => {
+        const addSong = songs.find((song) => song._id === id)
+        setIsPlaying(prev => currentSong && currentSong._id === id ? !prev : true)
+        setCurrentSong(addSong)
     };
-  
+
     return (
         <table className={styles.table}>
-            <thead className={styles.thead}>
-                <tr>
-                    <th>SONG NAME</th>
-                    <th>SOURCE</th>
-                    <th>ADDED ON</th>
-                    <th>ACTION</th>
-                </tr>
-            </thead>
+            <TableHead />
 
             <tbody className={styles.tbody}>
-                {songs.map((song) => (
-                    <TableRow key={song._id} song={song} currentPlayingSongId={currentPlayingSongId} handlePlayIconClick={handlePlayIconClick} />
-                ))}
+
+                {songs.length > 0 ?
+                    songs.map((song) => (
+                        <TableRow key={song._id}
+                            song={song}
+                            isPlaying={isPlaying}
+                            currentSong={currentSong}
+                            handlePlayIcon={handlePlayIcon} />
+                    )) :
+                    <tr><td style={{ textAlign: 'center' }}>No data available</td></tr>
+                }
+
             </tbody>
         </table>
     )

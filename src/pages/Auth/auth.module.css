@@ -30,7 +30,7 @@
 .inputField {
     width: 100%;
     padding: 12px 15px;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
     border-radius: 6px;
     border: 1px solid #E4E8F0;
     font-size: 1rem;
@@ -61,12 +61,24 @@
     height: 18px;
 }
 
-.label{
+.label {
     font-size: .95rem;
+    position: relative;
 }
-.label i{
+
+.label i {
     font-size: .85rem;
     font-weight: 500;
+}
+
+/* Error Tag */
+.passwordContainer .errorTag {
+    position: absolute;
+    bottom: -1.3rem;
+    left: .5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: red;
 }
 
 .login button {

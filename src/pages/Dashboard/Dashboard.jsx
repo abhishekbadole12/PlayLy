@@ -9,22 +9,24 @@ import { UserContext } from "../../App";
 
 export default function Dashboard() {
 
-    const { currentPlayingSongId, setCurrentPlayingSongId } = useContext(UserContext)
+    const { currentSong, setCurrentSong } = useContext(UserContext)
 
+    const [isPlaying, setIsPlaying] = useState(false);
     const [songs, setSongs] = useState([]) // Songs List
+
+    const handlePrev = () => {
+        // handle previous
+    }
+
+    const handleNext = () => {
+        // handle next
+    }
 
     useEffect(() => {
         const fetchSongs = async () => {
             const res = await getSongs()
             setSongs(res)
-
-            // Check if currentPlayingSongId and localStorage are empty, and if so, set the first song
-            if (!currentPlayingSongId && !localStorage.getItem('currentSongId') && res.length > 0) {
-                setCurrentPlayingSongId(res[0]._id);
-                localStorage.setItem('currentSongId', res[0]._id);
-            }
         }
-
         fetchSongs()
     }, [])
 
@@ -34,15 +36,13 @@ export default function Dashboard() {
             <SideMenu />
 
             <section>
-
                 <Header />
 
-                <Table songs={songs} />
+                <Table songs={songs} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 
-                <Footer currentPlayingSong={songs.find((song) => (song._id === currentPlayingSongId))} />
-
+                <Footer isPlaying={isPlaying} setIsPlaying={setIsPlaying} currentSong={currentSong}
+                    handlePrev={handlePrev} handleNext={handleNext} />
             </section>
-
         </div >)
 }
 
