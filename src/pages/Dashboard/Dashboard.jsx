@@ -1,11 +1,15 @@
+import { useContext, useEffect, useState } from "react";
 import styles from "./Dashboard.module.css"
+import { UserContext } from "../../App";
+import { getSongs } from "../../services/api";
+
+// components
 import SideMenu from "../../components/SideMenu/SideMenu";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Table from "../../components/Table/Table";
-import { useContext, useEffect, useState } from "react";
-import { getSongs } from "../../services/api";
-import { UserContext } from "../../App";
+import Upload from "../../components/Upload/Upload";
+
 
 export default function Dashboard() {
 
@@ -38,10 +42,13 @@ export default function Dashboard() {
             <section>
                 <Header />
 
+                {/* <Upload /> */}
+
                 <Table songs={songs} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 
-                <Footer isPlaying={isPlaying} setIsPlaying={setIsPlaying} currentSong={currentSong}
-                    handlePrev={handlePrev} handleNext={handleNext} />
+                <Footer isPlaying={isPlaying} setIsPlaying={setIsPlaying}
+                    currentSong={currentSong} handlePrev={handlePrev} handleNext={handleNext} />
+
             </section>
         </div >)
 }
