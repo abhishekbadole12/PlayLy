@@ -7,7 +7,7 @@ function Header() {
     return (
         <header className={styles.header}>
 
-            <h5 className={styles.headerTitle}>{params.playlistName}</h5>
+            <h5 className={styles.headerTitle}>{params.playlistName.replace(/-/g, ' ')}</h5>
 
             <div>
                 <Link to="/login">

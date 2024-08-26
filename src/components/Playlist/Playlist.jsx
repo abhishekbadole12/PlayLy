@@ -4,7 +4,6 @@ import { CiGrid42 } from "react-icons/ci";
 import { FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 import { SlOptionsVertical } from "react-icons/sl";
-import { IoIosArrowDown } from "react-icons/io";
 
 export default function Playlist({ playlist, onclick, onUpdate, onCancel, onActive, isActive }) {
     const { _id, title, songs } = playlist;
@@ -35,7 +34,7 @@ export default function Playlist({ playlist, onclick, onUpdate, onCancel, onActi
     }
 
     return (
-        <li className={styles.asideItem} onClick={() => onclick(title)}>
+        <li className={`${styles.asideItem} ${!!isActive ? styles.activeItem : ""}`} onClick={() => onclick(title)}>
             <CiGrid42 />
 
             <input

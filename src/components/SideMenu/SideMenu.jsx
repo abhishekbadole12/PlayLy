@@ -37,7 +37,8 @@ export default function SideMenu({ }) {
     }
 
     const handlePlaylistClick = (playlistName) => {
-        navigate(`/dashboard/${playlistName}`); // Navigate to dynamic route
+        const path = playlistName.trim().replace(/\s+/g, '-')
+        navigate(`/dashboard/${path}`);
     };
 
     return (
@@ -76,7 +77,7 @@ export default function SideMenu({ }) {
                             onUpdate={handleUpdate}
                             onCancel={handleCancel}
                             // onActive={handleActive}
-                            isActive={activePlaylist && params.playlistName === playlist.title}
+                            isActive={params.playlistName === playlist.title.trim().replace(/\s+/g, '-')}
                         />
                     ))
                 )}
