@@ -1,16 +1,20 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import styles from "./Table.module.css"
 import TableHead from "./TableHead";
 import TableRow from "./TableRow";
 import { UserContext } from "../../App"
 
-export default function Table({ songs, isPlaying, setIsPlaying }) {
+import useSongStore from "../../store/songStore";
+
+export default function Table({ isPlaying, setIsPlaying }) {
 
     const { currentSong, setCurrentSong } = useContext(UserContext);
 
+    const { songs } = useSongStore();
+
     // handle table play button
     const handlePlayIcon = (id) => {
-        const addSong = songs.find((song) => song._id === id)
+        const addSong = songs.length > 0 && songs.find((song) => song._id === id)
         setIsPlaying(prev => currentSong && currentSong._id === id ? !prev : true)
         setCurrentSong(addSong)
     };
@@ -21,7 +25,7 @@ export default function Table({ songs, isPlaying, setIsPlaying }) {
 
             <tbody className={styles.tbody}>
 
-                {songs.length > 0 ?
+                {songs.length ?
                     songs.map((song) => (
                         <TableRow key={song._id}
                             song={song}

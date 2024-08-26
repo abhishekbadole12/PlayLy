@@ -29,11 +29,11 @@
 
 .asideItem p {
     color: var(--primary-text-color);
-    font-size: 1.05rem;
+    font-size: 0.875rem;
 }
 
 .asideItem svg {
-    font-size: 1.75rem;
+    font-size: 1.15rem;
 }
 
 .asideItemTitle {

@@ -6,7 +6,7 @@
 
 :root {
   --primary-color: #552583;
-  
+
   /* text-colors */
   --primary-text-color: #333;
   --secondary-text-color: #6c757d;
@@ -18,6 +18,6 @@
   font-family: 'Roboto', sans-serif;
 }
 
-button{
+button {
   cursor: pointer;
 }

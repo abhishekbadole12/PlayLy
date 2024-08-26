@@ -1,0 +1,95 @@
+.asideItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: .5rem 1.75rem;
+    cursor: pointer;
+    margin-bottom: 0.25rem;
+    position: relative;
+}
+
+.asideItem svg {
+    font-size: 1.75rem;
+}
+
+/* active Item */
+.activeItem {
+    color: #1890FF;
+    border-right: 4px solid #1890FF;
+}
+
+.inputField {
+    width: 100%;
+    padding: 4px 8px;
+    font-size: 0.875rem;
+    background-color: transparent;
+    border-radius: 4px;
+    color: var(--primary-text-color) ;
+}
+
+.inputEdit {
+    border: 1px solid #ccc;
+}
+
+.inputReadOnly {
+    border: 1px solid #fff;
+    cursor: pointer;
+}
+
+/* Action buttons */
+.iconActions {
+    display: flex;
+    gap: 6px;
+}
+
+.iconActions svg {
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.iconCheck {
+    color: #2f855a;
+}
+
+.iconCheck:hover {
+    color: #22543d;
+    transform: scale(1.1);
+}
+
+.iconCross {
+    color: #e53e3e;
+    transform: scale(1.05);
+}
+
+.iconCross:hover {
+    color: #c53030;
+    transform: scale(1.1);
+}
+
+/* Modal Dropdown*/
+.dropdown {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    position: absolute;
+    right: -2rem;
+    bottom: -1.25rem;
+}
+
+.dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdownItem {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+.dropdownItem:hover {
+    background-color: #e5e7eb;
+    color: #374151;
+}

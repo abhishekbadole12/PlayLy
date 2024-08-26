@@ -1,9 +1,8 @@
 .loginPageContainer {
     height: 100vh;
     display: flex;
-    margin-top: 7%;
     justify-content: center;
-    padding: 20px;
+    padding: 7% 20px;
 }
 
 .login {

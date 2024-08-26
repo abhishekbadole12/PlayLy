@@ -8,11 +8,11 @@ function Header() {
             <h5 className={styles.headerTitle}>Songs</h5>
 
             <div>
-                <Link to="/signin">
+                <Link to="/login">
                     <button>Login</button>
                 </Link>
 
-                <Link to="/signup">
+                <Link to="/register">
                     <button>Register</button>
                 </Link>
             </div>
