@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styles from "./Header.module.css"
 
 function Header() {
+    const params = useParams()
+
     return (
         <header className={styles.header}>
 
-            <h5 className={styles.headerTitle}>Songs</h5>
+            <h5 className={styles.headerTitle}>{params.playlistName}</h5>
 
             <div>
                 <Link to="/login">

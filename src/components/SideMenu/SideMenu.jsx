@@ -1,13 +1,23 @@
 import { useEffect, useState } from "react"
-import styles from "./SideMenu.module.css"
+import { useNavigate, useParams } from "react-router-dom";
+
+import styles from "./SideMenu.module.css";
+
+import Playlist from "../Playlist/Playlist";
+
+// Icons
 import { CiGrid42 } from "react-icons/ci";
 import { BiLogInCircle } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa";
-import Playlist from "../Playlist/Playlist";
+
+// Store
 import usePlaylistStore from "../../store/playlistStore";
 import useAuthStore from "../../store/authStore";
 
 export default function SideMenu({ }) {
+    const navigate = useNavigate();
+
+    const params = useParams()
 
     const { playlists } = usePlaylistStore()
     const { activePlaylist, logout } = useAuthStore()
@@ -26,6 +36,10 @@ export default function SideMenu({ }) {
 
     }
 
+    const handlePlaylistClick = (playlistName) => {
+        navigate(`/dashboard/${playlistName}`); // Navigate to dynamic route
+    };
+
     return (
         <aside className={styles.sideMenu}>
             <h2 className={styles.projectTitle}>PLAY LY</h2>
@@ -33,12 +47,14 @@ export default function SideMenu({ }) {
             <ul className={styles.asideItems}>
                 <h5 className={styles.asideItemTitle}>General</h5>
 
-                <li className={`${styles.asideItem} ${currentRoute === "/trending-songs" ? styles.activeItem : ""}`}>
+                <li className={`${styles.asideItem} ${params.playlistName === "trendings" ? styles.activeItem : ""}`}
+                    onClick={() => handlePlaylistClick("trendings")}>
                     <CiGrid42 />
                     <p>Trending Songs</p>
                 </li>
 
-                <li className={`${styles.asideItem} ${currentRoute === '/songs' ? styles.activeItem : ""}`}>
+                <li className={`${styles.asideItem} ${params.playlistName === 'songs' ? styles.activeItem : ""}`}
+                    onClick={() => handlePlaylistClick("songs")}>
                     <CiGrid42 />
                     <p>Songs</p>
                 </li>
@@ -56,10 +72,11 @@ export default function SideMenu({ }) {
                         <Playlist
                             key={playlist._id}
                             playlist={playlist}
+                            onclick={handlePlaylistClick}
                             onUpdate={handleUpdate}
                             onCancel={handleCancel}
                             // onActive={handleActive}
-                            isActive={activePlaylist && activePlaylist._id === playlist._id}
+                            isActive={activePlaylist && params.playlistName === playlist.title}
                         />
                     ))
                 )}

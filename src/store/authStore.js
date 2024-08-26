@@ -3,7 +3,7 @@ import { api } from "../services/api";
 
 const useAuthStore = create((set) => ({
   username: null,
-  isLoggedIn: true,
+  isLoggedIn: false,
   authToken: localStorage.getItem("authToken") || null,
   isLoading: false,
   isError: false,

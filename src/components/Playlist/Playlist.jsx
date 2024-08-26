@@ -6,8 +6,8 @@ import { RxCross2 } from "react-icons/rx";
 import { SlOptionsVertical } from "react-icons/sl";
 import { IoIosArrowDown } from "react-icons/io";
 
-export default function Playlist({ playlist, onUpdate, onCancel, onActive, isActive }) {
-    const { _id, title, songs } = playlist ;
+export default function Playlist({ playlist, onclick, onUpdate, onCancel, onActive, isActive }) {
+    const { _id, title, songs } = playlist;
 
     const [name, setName] = useState(title || "");
     const [isToggle, setIsToggle] = useState(false);
@@ -35,7 +35,7 @@ export default function Playlist({ playlist, onUpdate, onCancel, onActive, isAct
     }
 
     return (
-        <li className={styles.asideItem} onClick={() => onActive(_id)}>
+        <li className={styles.asideItem} onClick={() => onclick(title)}>
             <CiGrid42 />
 
             <input

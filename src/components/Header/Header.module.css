@@ -14,6 +14,7 @@
 .headerTitle {
     font-size: 1.75rem;
     color: #fff;
+    text-transform: capitalize;
 }
 
 .header div {
