@@ -26,6 +26,8 @@ export default function SideMenu({ }) {
 
     const currentRoute = '/songs';
 
+    const isAside = true;
+
     // Handle Update Playlist
     const handleUpdate = (title) => {
 
@@ -43,7 +45,13 @@ export default function SideMenu({ }) {
 
     return (
         <aside className={styles.sideMenu}>
-            <h2 className={styles.projectTitle}>PLAY LY</h2>
+            <div style={{ position: 'relative' }}>
+                <h2 className={styles.projectTitle}>PLAY LY</h2>
+
+                <div className={`${styles.asideToggle} ${!isAside ? styles.outside : styles.inside}`}>
+                    <div />
+                </div>
+            </div>
 
             <ul className={styles.asideItems}>
                 <h5 className={styles.asideItemTitle}>General</h5>
