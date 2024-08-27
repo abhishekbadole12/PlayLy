@@ -16,7 +16,6 @@ import useAuthStore from "../../store/authStore";
 
 export default function SideMenu({ }) {
     const navigate = useNavigate();
-
     const params = useParams()
 
     const { playlists } = usePlaylistStore()

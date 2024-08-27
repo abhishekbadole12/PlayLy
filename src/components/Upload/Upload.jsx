@@ -1,25 +1,43 @@
 import React, { useState } from 'react';
 import styles from './Upload.module.css'
+import useSongStore from '../../store/songStore';
+import { showErrorToast, showToast } from '../../utils/showToast';
 
 export default function Upload() {
-    const [formData, setFormData] = useState({
-        songName: '',
-        source: '',
-        file: null,
-    });
-    const [isLoading, setIsLoading] = useState(false);
+    const { isUploading, uploadSong } = useSongStore();
+
+    const [formData, setFormData] = useState({ source: '', files: [], });
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: files ? files[0] : value
-        }));
+
+        if (files) {
+            setFormData((prev) => ({
+                ...prev, [name]: Array.from(files)
+            }))
+        } else {
+            setFormData((prev) => ({
+                ...prev,
+                [name]: value
+            }));
+        }
     };
 
+    // Handle Submit
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
+        setErrorMsg(null);
+
+        try {
+            const { isSucceed } = await uploadSong(formData)
+            if (isSucceed) {
+                showToast('Uploaded  Successfully')
+                setFormData({ source: '', files: [] });
+            }
+        } catch (error) {
+            showErrorToast(error.message)
+            setFormData({ source: '', files: [] });
+        }
     };
 
     return (
@@ -28,21 +46,16 @@ export default function Upload() {
 
             <form className={styles.uploadForm} onSubmit={handleSubmit}>
                 <label className={styles.formLabel}>
-                    <span>Song Name:</span>
-                    <input type="text" className={styles.inputField} placeholder="Enter song name" onChange={handleChange} name='songName' />
-                </label>
-
-                <label className={styles.formLabel}>
                     <span>Source:</span>
                     <input type="text" className={styles.inputField} placeholder="Enter source" onChange={handleChange} name='source' />
                 </label>
 
                 <label className={styles.formLabel}>
                     <span>Upload File:</span>
-                    <input type="file" className={styles.fileInput} name='file' onChange={handleChange} />
+                    <input type="file" className={styles.fileInput} name='files' onChange={handleChange} multiple />
                 </label>
 
-                <button type="submit" className={styles.submitButton}>{isLoading ? 'Loading...' : 'Upload'}</button>
+                <button type="submit" disabled={isUploading} className={styles.submitButton}>{isUploading ? 'Uploading...' : 'Upload'}</button>
             </form>
         </div >
     )

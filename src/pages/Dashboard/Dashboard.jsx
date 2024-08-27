@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./Dashboard.module.css"
 import { UserContext } from "../../App";
 
@@ -8,24 +9,23 @@ import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Table from "../../components/Table/Table";
 import Upload from "../../components/Upload/Upload";
+
+// Store's
 import usePlaylistStore from "../../store/playlistStore";
-import { useNavigate } from "react-router-dom";
 import useSongStore from "../../store/songStore";
 
+
 export default function Dashboard() {
-    const navigation = useNavigate()
+    const navigation = useNavigate();
+    const params = useParams();
 
     // Store's
     const { getPlaylists } = usePlaylistStore()
     const { getSongs } = useSongStore()
 
-    const { currentSong, setCurrentSong } = useContext(UserContext)
-
+    const { currentSong, setCurrentSong } = useContext(UserContext);
 
     const [isPlaying, setIsPlaying] = useState(false);
-
-    // const [songs, setSongs] = useState([]) // Songs List
-
 
     const handlePrev = () => {
         // Handle previous
@@ -37,7 +37,7 @@ export default function Dashboard() {
 
     // Handle Create New Playlist
     const handleCreatePlaylist = async (data) => {
-
+        // Create logic
     }
 
     useEffect(() => {
@@ -82,21 +82,26 @@ export default function Dashboard() {
             <section>
                 <Header />
 
-                {/* <Upload /> */}
+                {/* Only Admin Can access Upload */}
+                {params.playlistName === 'upload' ?
 
-                <Table
-                    isPlaying={isPlaying}
-                    setIsPlaying={setIsPlaying}
-                />
+                    <Upload />
 
-                <Footer
-                    isPlaying={isPlaying}
-                    setIsPlaying={setIsPlaying}
-                    currentSong={currentSong}
-                    handlePrev={handlePrev}
-                    handleNext={handleNext}
-                />
+                    : <>
+                        <Table
+                            isPlaying={isPlaying}
+                            setIsPlaying={setIsPlaying}
+                        />
 
+                        <Footer
+                            isPlaying={isPlaying}
+                            setIsPlaying={setIsPlaying}
+                            currentSong={currentSong}
+                            handlePrev={handlePrev}
+                            handleNext={handleNext}
+                        />
+                    </>
+                }
             </section>
         </div >
     )

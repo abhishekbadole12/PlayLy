@@ -7,13 +7,11 @@ import useAuthStore from '../../store/authStore';
 export default function Login() {
   const navigate = useNavigate()
 
-  const { login } = useAuthStore()
+  const { login, isLoading, isError } = useAuthStore()
 
-  const [userDetails, setUserDetails] = useState({ email: 'abhishekbadole8@gmail.com', password: 'abhishek' })
-  const [error, setError] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-
+  const [userDetails, setUserDetails] = useState({ email: '', password: '' })
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null)
 
   // handle toggle
   const togglePasswordVisibility = () => {
@@ -27,23 +25,16 @@ export default function Login() {
     }))
   }
 
-    // Toast notification
-    const showToast = () =>
-      toast.success("User Registered", { position: "bottom-right" });
-
   // handle submit
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setIsLoading(true)
     try {
-      await login(userDetails)
+      await login(userDetails);
       setUserDetails({ email: "", password: "" })
       navigate('/dashboard/songs')
     } catch (error) {
       setUserDetails({ email: "", password: "" })
-      setError(error?.message)
-    } finally {
-      setIsLoading(false)
+      setErrorMsg(error?.message)
     }
   }
 
@@ -71,16 +62,14 @@ export default function Login() {
             {passwordVisible ? <FaEyeSlash /> : <FaEye />}
           </div>
 
-          {error && <p className={styles.errorTag}>{error}</p>}
+          {isError && <p className={styles.errorTag}>{errorMsg}</p>}
         </div>
 
-
-        <p className={styles.label}>~ To register <Link to="/signup"><i>Click here</i></Link></p>
+        <p className={styles.label}>~ To register <Link to="/register"><i>Click here</i></Link></p>
 
         <button type='submit'>{isLoading ? 'Loading...' : 'Sign In'}</button>
 
       </form>
-
     </div>
   );
 }

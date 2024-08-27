@@ -10,7 +10,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for toast notifications
 
 // Context Created
-export const UserContext = createContext()
+export const UserContext = createContext();
 
 export default function App() {
 

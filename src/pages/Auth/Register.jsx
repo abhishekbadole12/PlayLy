@@ -3,15 +3,13 @@ import styles from "./auth.module.css";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuthStore from '../../store/authStore';
-import { toast } from 'react-toastify';
 
 export default function Register() {
   const navigate = useNavigate()
-  const { register } = useAuthStore()
+  const { register, isError, isLoading } = useAuthStore()
 
   const [userDetails, setUserDetails] = useState({ username: '', email: '', password: '', confirm_password: '' })
   const [error, setError] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -25,18 +23,13 @@ export default function Register() {
       ...prev, [e.target.name]: e.target.value
     }))
   }
-  
-  // Toast notification
-  const showToast = () =>
-    toast.success("User Registered", { position: "bottom-right" });
 
   // handle submit
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setIsLoading(true)
     try {
       await register(userDetails)
-      showToast()
+      showToast('User Registered, Redirecting to Login page')
       setTimeout(() => {
         navigate('/login')
       }, 1500);
@@ -44,8 +37,6 @@ export default function Register() {
     } catch (error) {
       setUserDetails({ username: "", email: '', password: '', confirm_password: '' })
       setError(error?.message)
-    } finally {
-      setIsLoading(false)
     }
   }
 
@@ -88,12 +79,12 @@ export default function Register() {
             {passwordVisible ? <FaEyeSlash /> : <FaEye />}
           </div>
 
-          {error && <p className={styles.errorTag}>{error}</p>}
+          {isError && <p className={styles.errorTag}>{error}</p>}
         </div>
 
-        <p className={styles.label}>~ Already have account <Link to="/signin"><i>Click here</i></Link></p>
+        <p className={styles.label}>~ Already have account <Link to="/login"><i>Click here</i></Link></p>
 
-        <button type='submit'>{isLoading ? "Loading..." : 'Register'}</button>
+        <button type='submit' disabled={isLoading}>{isLoading ? "Loading..." : 'Register'}</button>
 
       </form>
 
