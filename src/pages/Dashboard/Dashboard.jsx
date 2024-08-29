@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./Dashboard.module.css"
 import { UserContext } from "../../App";
+import { DotLoader } from "react-spinners";
 
 // components
 import SideMenu from "../../components/SideMenu/SideMenu";
@@ -21,9 +22,9 @@ export default function Dashboard() {
 
     // Store's
     const { getPlaylists } = usePlaylistStore()
-    const { getSongs } = useSongStore()
+    const { getSongs, getTrendingSongs } = useSongStore()
 
-    const { currentSong, setCurrentSong } = useContext(UserContext);
+    const { mediaPlayer } = useContext(UserContext);
 
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -43,7 +44,11 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchSongs = async () => {
             try {
-                await getSongs();
+                if (params.playlistName == 'trendings') {
+                    await getTrendingSongs()
+                } else {
+                    await getSongs();
+                }
             } catch (error) {
                 if (error.message === 'Invalid token') {
                     navigation('/login')
@@ -88,18 +93,25 @@ export default function Dashboard() {
                     <Upload />
 
                     : <>
+
+                        {/* <div className={styles.loadingContainer}>
+                            <DotLoader loading={isLoading} color="#552583" />
+                        </div> */}
+
                         <Table
                             isPlaying={isPlaying}
                             setIsPlaying={setIsPlaying}
                         />
 
-                        <Footer
-                            isPlaying={isPlaying}
-                            setIsPlaying={setIsPlaying}
-                            currentSong={currentSong}
-                            handlePrev={handlePrev}
-                            handleNext={handleNext}
-                        />
+                        {mediaPlayer && (
+                            <Footer
+                                isPlaying={isPlaying}
+                                setIsPlaying={setIsPlaying}
+                                currentSong={currentSong}
+                                handlePrev={handlePrev}
+                                handleNext={handleNext}
+                            />
+                        )}
                     </>
                 }
             </section>

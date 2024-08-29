@@ -30,8 +30,10 @@ export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, 
         setIsToggle(false)
     }
 
-    const handleRemove = () => {
-        onDelete(_id)
+    const handleRemove = (e) => {
+        e.stopPropagation();
+        onDelete(_id);
+        setIsToggle(false);
     }
 
     const handleSubmit = (e) => {

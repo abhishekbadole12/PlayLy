@@ -16,10 +16,13 @@ export default function App() {
 
   const [currentSong, setCurrentSong] = useState(null);
 
+  const [mediaPlayer, setMediaPlayer] = useState(false);
+  
+
   return (
     <div className='App'>
       <AuthProvider>
-        <UserContext.Provider value={{ currentSong, setCurrentSong, }}>
+        <UserContext.Provider value={{ mediaPlayer, setMediaPlayer }}>
           <Router>
             <Routes>
               <Route path='/' element={<Login />} />

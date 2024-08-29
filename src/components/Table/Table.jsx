@@ -24,7 +24,6 @@ export default function Table({ isPlaying, setIsPlaying }) {
             <TableHead />
 
             <tbody className={styles.tbody}>
-
                 {songs.length ?
                     songs.map((song) => (
                         <TableRow key={song._id}
@@ -33,10 +32,11 @@ export default function Table({ isPlaying, setIsPlaying }) {
                             currentSong={currentSong}
                             handlePlayIcon={handlePlayIcon} />
                     )) :
-                    <tr><td style={{ textAlign: 'center' }}>No data available</td></tr>
+                    <tr>
+                        <td style={{ textAlign: 'center' }}>No data available</td>
+                    </tr>
                 }
-
-            </tbody>
+            </tbody>            
         </table>
     )
 }

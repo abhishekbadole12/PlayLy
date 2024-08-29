@@ -7,7 +7,7 @@ export default function TableHead() {
             <tr>
                 <th>SONG NAME</th>
                 <th>SOURCE</th>
-                <th>Count</th>
+                <th>PLAY COUNT</th>
                 <th>ACTION</th>
             </tr>
         </thead>

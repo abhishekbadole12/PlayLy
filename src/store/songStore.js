@@ -22,6 +22,21 @@ const useSongStore = create((set) => ({
     }
   },
 
+  // Get Trending Songs
+  getTrendingSongs: async () => {
+    try {
+      set({ isLoading: true });
+      const { data } = await api.get("/songs/trendings", { withCredentials: true });
+      set({ songs: data });
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "Failed to get Trending Songs";
+      throw new Error(errorMessage);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
   // Upload Song - Admin
   uploadSong: async (data) => {
     try {
