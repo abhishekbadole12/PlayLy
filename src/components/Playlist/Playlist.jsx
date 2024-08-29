@@ -5,7 +5,7 @@ import { FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 import { SlOptionsVertical } from "react-icons/sl";
 
-export default function Playlist({ playlist, onclick, onUpdate, onCancel, onActive, isActive }) {
+export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, onPlaylistClick, onCancel, onUpdate, onDelete, isActive, isNew = false }) {
     const { _id, title, songs } = playlist;
 
     const [name, setName] = useState(title || "");
@@ -20,38 +20,67 @@ export default function Playlist({ playlist, onclick, onUpdate, onCancel, onActi
 
     // Handle Input Change
     const handleChange = (e) => {
-        if (isEdit) setName(e.target.value)
+        if (isEdit || isNew) setName(e.target.value)
     }
 
     // Handle Edit Click
-    const handleEditClick = () => {
+    const handleEditClick = (e) => {
+        e.stopPropagation()
         setIsEdit(true)
         setIsToggle(false)
     }
 
     const handleRemove = () => {
-        // remove logic
+        onDelete(_id)
+    }
+
+    const handleSubmit = (e) => {
+        e.stopPropagation()
+        onUpdate(name)
+    }
+
+    const handleClose = (e) => {
+        e.stopPropagation()
+        onCancel()
+    }
+
+    const handleClick = (e) => {
+        if (!isNew || !isEdit) {
+            e.stopPropagation();
+            onPlaylistClick(title)
+        }
+    }
+
+    const handleInputClick = (e) => {
+        if (!isNew || !isEdit) {
+            e.stopPropagation();
+        }
+    };
+
+    const handleModalToggle = (e) => {
+        e.stopPropagation();
+        setIsToggle(prev => !prev)
     }
 
     return (
-        <li className={`${styles.asideItem} ${!!isActive ? styles.activeItem : ""}`} onClick={() => onclick(title)}>
+        <li className={`${styles.asideItem} ${!!isActive ? styles.activeItem : ""}`} onClick={handleClick}>
             <CiGrid42 />
 
             <input
                 type="text" placeholder="Enter playlist name" readOnly={!isEdit} name={name} value={name}
-                onChange={handleChange}
+                onChange={handleChange} onClick={handleInputClick}
                 className={`${styles.inputField} ${isEdit ? styles.inputEdit : styles.inputReadOnly}`}
             />
 
             {/*  Action Icon */}
             {isEdit ? (
                 <div className={styles.iconActions}>
-                    <FaCheck className={styles.iconCheck} onClick={onUpdate} />
-                    <RxCross2 className={styles.iconCross} onClick={onCancel} />
+                    <FaCheck className={styles.iconCheck} onClick={handleSubmit} />
+                    <RxCross2 className={styles.iconCross} onClick={handleClose} />
                 </div>
             ) : (
                 <div className={styles.iconActions}  >
-                    <SlOptionsVertical size={12} onClick={() => setIsToggle(prev => !prev)} />
+                    <SlOptionsVertical size={12} onClick={handleModalToggle} />
                 </div>
             )}
 

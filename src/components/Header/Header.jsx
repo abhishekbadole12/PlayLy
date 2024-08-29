@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import styles from "./Header.module.css"
+import { TbUserSquareRounded } from "react-icons/tb";
 
 function Header() {
     const params = useParams()
@@ -17,6 +18,7 @@ function Header() {
                 <Link to="/register">
                     <button>Register</button>
                 </Link>
+                {/* <TbUserSquareRounded /> */}
             </div>
 
         </header>

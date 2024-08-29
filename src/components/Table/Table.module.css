@@ -27,7 +27,7 @@
 }
 
 .songImage {
-    width: 65px;
+    min-width: 65px;
     height: 65px;
     border-radius: 6px;
     overflow: hidden;

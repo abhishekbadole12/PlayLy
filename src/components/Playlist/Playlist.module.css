@@ -6,7 +6,7 @@
     cursor: pointer;
     margin-bottom: 0.25rem;
     position: relative;
-    border-right: 4px solid #fff;
+    border-right: 4px solid transparent;
 }
 
 .asideItem svg {

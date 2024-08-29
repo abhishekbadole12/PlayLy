@@ -66,6 +66,12 @@
 }
 
 /* ----------- Footer ( Logout Button) ---------- */
+.asideItem:nth-last-child(2) {
+    position: fixed;
+    border: none;
+    /* margin-bottom: 0; */
+    bottom: 5rem;
+}
 
 .sideMenu .asideItem:last-child {
     border: none;
@@ -73,7 +79,6 @@
     bottom: 2rem;
     position: fixed;
 }
-
 
 /* Toggle Button */
 .asideToggle {
