@@ -18,32 +18,44 @@
     list-style: none;
 }
 
-.asideItem {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: .5rem 1.75rem;
-    cursor: pointer;
-    margin-bottom: 0.25rem;
-}
-
-.asideItem p {
-    color: var(--primary-text-color);
-    font-size: 0.875rem;
-}
-
-.asideItem svg {
-    font-size: 1.15rem;
-}
-
 .asideItemTitle {
     padding: 1rem 1.75rem;
-    font-size: .85rem;
+    font-size: .875rem;
     font-weight: 500;
     margin: .75rem 0 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.asideItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: .35rem 1.75rem;
+    cursor: pointer;
+    margin-bottom: 0.25rem;
+}
+
+/* active Item */
+.activeItem {
+    color: #1890FF;
+    background-color: #f5f5ff;
+    border-right: 4px solid #1890FF;
+}
+
+.activeItem p {
+    color: #1890FF;
+}
+/* ------------- */
+
+.playlistIcon {
+    font-size: 1.15rem;
+}
+
+.playlistTitle {
+    color: var(--primary-text-color);
+    font-size: 0.875rem;
 }
 
 .addPlaylist {
@@ -59,11 +71,7 @@
     color: var(--secondary-text-color);
 }
 
-/* active Item */
-.activeItem {
-    color: #1890FF;
-    border-right: 4px solid #1890FF;
-}
+
 
 /* ----------- Footer ( Logout Button) ---------- */
 .asideItem:nth-last-child(2) {

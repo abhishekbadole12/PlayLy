@@ -19,7 +19,8 @@ export default function SideMenu({ }) {
     const navigate = useNavigate();
     const params = useParams()
 
-    const { playlists, createPlaylist, removePlaylist, isLoading, isSucceed } = usePlaylistStore();
+    const { playlists, createPlaylist, removePlaylist, activePlaylist,
+        onActivePlaylist, updatePlaylist, isLoading } = usePlaylistStore();
     const { logout } = useAuthStore();
 
     const [isNewPlaylist, setIsNewPlaylist] = useState(false);
@@ -27,11 +28,16 @@ export default function SideMenu({ }) {
     const isAside = true;
 
     // Handle Update Playlist
-    const handleUpdate = async (title) => {
-        console.log(title);
+    const handleUpdate = async (data) => {
         try {
-            const { isSucceed } = await createPlaylist(title)
-            if (isSucceed) showToast('Playlist created')
+            let isSucceed;
+            if (isNewPlaylist) {
+                isSucceed = await createPlaylist(data)
+                if (isSucceed) showToast('Playlist Created')
+            } else {
+                isSucceed = await updatePlaylist(data)
+                if (isSucceed) showToast('Playlist Title Updated')
+            }
         } catch (error) {
             showErrorToast(error.message)
         } finally {
@@ -53,12 +59,18 @@ export default function SideMenu({ }) {
         setIsNewPlaylist(false)
     }
 
-    const handleClick = (playlistName) => {
-        console.log(playlistName);
-        const path = playlistName.trim().replace(/\s+/g, '-')
+    const handleClick = (playlist) => {
+        let path;
+        if (typeof playlist === 'object') {
+            onActivePlaylist(playlist)
+            path = playlist.title.trim().replace(/\s+/g, '-')
+        } else {
+            path = playlist
+            onActivePlaylist(playlist)
+        }
         navigate(`/dashboard/${path}`);
-    };
 
+    };
 
     return (
         <aside className={styles.sideMenu}>
@@ -76,14 +88,14 @@ export default function SideMenu({ }) {
 
                 <li className={`${styles.asideItem} ${params.playlistName === "trendings" ? styles.activeItem : ""}`}
                     onClick={() => handleClick("trendings")}>
-                    <CiGrid42 />
-                    <p>Trending Songs</p>
+                    <CiGrid42 className={styles.playlistIcon} />
+                    <p className={styles.playlistTitle}>Trending Songs</p>
                 </li>
 
                 <li className={`${styles.asideItem} ${params.playlistName === 'songs' ? styles.activeItem : ""}`}
                     onClick={() => handleClick("songs")}>
-                    <CiGrid42 />
-                    <p>Songs</p>
+                    <CiGrid42 className={styles.playlistIcon} />
+                    <p className={styles.playlistTitle}>Songs</p>
                 </li>
 
                 <h5 className={styles.asideItemTitle}>Your Playlist
@@ -103,7 +115,9 @@ export default function SideMenu({ }) {
                             onCancel={handleCancel}
                             onUpdate={handleUpdate}
                             onDelete={handleRemove}
-                            isActive={params.playlistName === playlist?.title.trim().replace(/\s+/g, '-')}
+                            isActive={typeof activePlaylist === 'object' ? playlist._id == activePlaylist?._id
+                                : params.playlistName === playlist?.title.trim().replace(/\s+/g, '-')
+                            }
                         />
                     ))
                 )}

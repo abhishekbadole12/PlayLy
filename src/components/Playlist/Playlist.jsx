@@ -8,7 +8,7 @@ import { SlOptionsVertical } from "react-icons/sl";
 export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, onPlaylistClick, onCancel, onUpdate, onDelete, isActive, isNew = false }) {
     const { _id, title, songs } = playlist;
 
-    const [name, setName] = useState(title || "");
+    const [inputTitle, setInputTitle] = useState(title || "");
     const [isToggle, setIsToggle] = useState(false);
     const [isEdit, setIsEdit] = useState(!title);
 
@@ -20,7 +20,7 @@ export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, 
 
     // Handle Input Change
     const handleChange = (e) => {
-        if (isEdit || isNew) setName(e.target.value)
+        if (isEdit || isNew) setInputTitle(e.target.value)
     }
 
     // Handle Edit Click
@@ -36,28 +36,30 @@ export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, 
         setIsToggle(false);
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.stopPropagation()
-        onUpdate(name)
+        const data = isNew ? inputTitle : { _id, inputTitle }
+        try {
+            await onUpdate(data);
+            setIsEdit(false);
+        } catch (error) {
+            console.error("Failed to update playlist:", error.message);
+        }
     }
 
     const handleClose = (e) => {
         e.stopPropagation()
+        setIsEdit(false)
+        setInputTitle(title);
         onCancel()
     }
 
     const handleClick = (e) => {
         if (!isNew || !isEdit) {
             e.stopPropagation();
-            onPlaylistClick(title)
+            onPlaylistClick(playlist)
         }
     }
-
-    const handleInputClick = (e) => {
-        if (!isNew || !isEdit) {
-            e.stopPropagation();
-        }
-    };
 
     const handleModalToggle = (e) => {
         e.stopPropagation();
@@ -66,13 +68,17 @@ export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, 
 
     return (
         <li className={`${styles.asideItem} ${!!isActive ? styles.activeItem : ""}`} onClick={handleClick}>
-            <CiGrid42 />
+            <CiGrid42 className={styles.playlistIcon} />
 
-            <input
-                type="text" placeholder="Enter playlist name" readOnly={!isEdit} name={name} value={name}
-                onChange={handleChange} onClick={handleInputClick}
-                className={`${styles.inputField} ${isEdit ? styles.inputEdit : styles.inputReadOnly}`}
-            />
+            {isEdit ? (
+                <input
+                    type="text" placeholder="Enter playlist name" readOnly={!isEdit} name={inputTitle} value={isEdit ? inputTitle : playlist.title}
+                    onChange={handleChange} 
+                    className={`${styles.inputField} ${isEdit ? styles.inputEdit : ''}`}
+                />
+            ) :
+                <p className={styles.playlistTitle}>{inputTitle}</p>
+            }
 
             {/*  Action Icon */}
             {isEdit ? (
@@ -82,7 +88,7 @@ export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, 
                 </div>
             ) : (
                 <div className={styles.iconActions}  >
-                    <SlOptionsVertical size={12} onClick={handleModalToggle} />
+                    <SlOptionsVertical onClick={handleModalToggle} />
                 </div>
             )}
 

@@ -10,9 +10,7 @@ const usePlaylistStore = create((set) => ({
   // Get Playlists
   getPlaylists: async () => {
     try {
-      const { data } = await api.get("/playlists/", {
-        withCredentials: true,
-      });
+      const { data } = await api.get("/playlists/");
 
       set({ playlists: data });
     } catch (error) {
@@ -24,16 +22,8 @@ const usePlaylistStore = create((set) => ({
 
   // Create Playlist
   createPlaylist: async (title) => {
-    console.log(title);
-
     try {
-      const { data, status } = await api.post(
-        "/playlists/",
-        { title },
-        {
-          withCredentials: true,
-        }
-      );
+      const { data, status } = await api.post("/playlists/", { title });
       if (status === 201 && data) {
         set({ isLoading: false, isSucceed: true });
         set((state) => ({ playlists: [...state.playlists, data] }));
@@ -48,46 +38,58 @@ const usePlaylistStore = create((set) => ({
   },
 
   // Update Playlist
-  updatePlaylist: async ({ playlistId, title }) => {
+  updatePlaylist: async ({ _id, inputTitle }) => {
+    const playlistId = _id;
+    const title = inputTitle.trim();
+
+    set({ isLoading: true, isSucceed: false });
     try {
-      const { data } = await api.post(
-        `/playlists/${playlistId}`,
-        { title },
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(data);
-      //   set((state) => ({ ...state, data }));
+      const { data } = await api.put(`/playlists/${playlistId}`, { title });
+
+      // Update the state with the new playlist data
+      set((state) => ({
+        ...state,
+        playlists: state.playlists.map((playlist) =>
+          playlist._id === playlistId
+            ? { ...playlist, title: data.title }
+            : playlist
+        ),
+      }));
     } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "Failed to update playlist";
+      throw new Error(errorMessage);
+    } finally {
+      set({ isLoading: false, isSucceed: true });
+    }
+  },
+
+  // Remove Playlist
+  removePlaylist: async (_id) => {
+    const playlistId = _id;
+    try {
+      const { status } = await api.delete(`/playlists/${playlistId}`);
+
+      if (status === 200) {
+        set((state) => ({
+          playlists: state.playlists.filter(
+            (playlist) => playlist._id !== playlistId
+          ),
+        }));
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+
       const errorMessage =
         error?.response?.data?.message || "Failed to update playlist";
       throw new Error(errorMessage);
     }
   },
 
-  // Remove Playlist
-  removePlaylist: async (_id) => {
-    try {
-      const { data, status } = await api.delete(
-        `/playlists/`,
-        { playlistId: _id },
-        {
-          withCredentials: true,
-        }
-      );
-
-      if (status === 200) {
-        set((state) => ({
-          playlists: state.playlists.filer((playlist) => playlist._id !== _id),
-        }));
-        return true;
-      }
-    } catch (error) {
-      const errorMessage =
-        error?.response?.data?.message || "Failed to update playlist";
-      throw new Error(errorMessage);
-    }
+  // handle Active Playlisst
+  onActivePlaylist: (playlist) => {
+    set({ activePlaylist: playlist });
   },
 }));
 
