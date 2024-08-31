@@ -15,9 +15,15 @@ import usePlaylistStore from "../../store/playlistStore";
 import useAuthStore from "../../store/authStore";
 import { showErrorToast, showToast } from "../../utils/showToast";
 
+// hook
+import { useIsAdmin } from "../../hooks/isAdmin";
+
+
 export default function SideMenu({ }) {
     const navigate = useNavigate();
     const params = useParams()
+    
+    const isAdmin = useIsAdmin()
 
     const { playlists, createPlaylist, removePlaylist, activePlaylist,
         onActivePlaylist, updatePlaylist, isLoading } = usePlaylistStore();
@@ -133,12 +139,13 @@ export default function SideMenu({ }) {
                 }
 
                 {/* Upload Songs - Admin */}
-                <li className={`${styles.asideItem} ${params.playlistName === "upload" ? styles.activeItem : ""}`}
-                    onClick={() => handleClick("upload")}>
-                    <FaCloudUploadAlt />
-                    <p>Upload Songs</p>
-                </li>
-
+                {isAdmin && (
+                    <li className={`${styles.asideItem} ${params.playlistName === "upload" ? styles.activeItem : ""}`}
+                        onClick={() => handleClick("upload")}>
+                        <FaCloudUploadAlt />
+                        <p>Upload Songs</p>
+                    </li>
+                )}
 
                 {/* Logout */}
                 <li className={styles.asideItem} onClick={() => logout()}>

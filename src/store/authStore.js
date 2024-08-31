@@ -16,14 +16,10 @@ const useAuthStore = create(
       login: async ({ email, password }) => {
         set({ isLoading: true });
         try {
-          const { data, status } = await api.post(
-            "/users/login",
-            {
-              email,
-              password,
-            },
-            { withCredentials: true }
-          );
+          const { data, status } = await api.post("/users/login", {
+            email,
+            password,
+          });
 
           if (status === 200 && data) {
             const { token, username } = data;
@@ -66,7 +62,6 @@ const useAuthStore = create(
       },
 
       logout: () => {
-        localStorage.removeItem("auth-storage");
         set({
           authToken: null,
           username: null,
