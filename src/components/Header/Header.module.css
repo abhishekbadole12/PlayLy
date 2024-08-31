@@ -12,15 +12,23 @@
 }
 
 .headerTitle {
-    font-size: 1.75rem;
+    font-size: 1.65rem;
     color: #fff;
     text-transform: capitalize;
+}
+
+.header nav {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .header div {
     margin-left: auto;
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 0.25rem;
 }
 
 .header button {
@@ -35,7 +43,17 @@
     padding: .5rem;
 }
 
-.header div svg {
-    font-size: 2.5rem;
+.userProfile {
+    margin-right: 1rem;
+}
+
+.userProfile svg {
+    font-size: 2.65rem;
     color: #fff;
+}
+
+.userProfile span {
+    font-size: 0.875rem;
+    color: #fff;
+    letter-spacing: 0.45px;
 }

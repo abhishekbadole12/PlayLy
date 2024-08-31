@@ -22,7 +22,7 @@ import { useIsAdmin } from "../../hooks/isAdmin";
 export default function SideMenu({ }) {
     const navigate = useNavigate();
     const params = useParams()
-    
+
     const isAdmin = useIsAdmin()
 
     const { playlists, createPlaylist, removePlaylist, activePlaylist,
@@ -121,8 +121,9 @@ export default function SideMenu({ }) {
                             onCancel={handleCancel}
                             onUpdate={handleUpdate}
                             onDelete={handleRemove}
-                            isActive={typeof activePlaylist === 'object' ? playlist._id == activePlaylist?._id
-                                : params.playlistName === playlist?.title.trim().replace(/\s+/g, '-')
+                            isActive={typeof activePlaylist === 'object' ?
+                                playlist._id == activePlaylist?._id
+                                : params.playlistName == playlist.title.trim().replace(/\s+/g, '-')
                             }
                         />
                     ))

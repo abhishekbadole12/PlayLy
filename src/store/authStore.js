@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { api } from "../services/api";
 import { persist } from "zustand/middleware";
+import { decodeToken } from "../services/auth";
 
 const useAuthStore = create(
   persist(
@@ -22,7 +23,8 @@ const useAuthStore = create(
           });
 
           if (status === 200 && data) {
-            const { token, username } = data;
+            const { token } = data;
+            const { username } = await decodeToken(token);
 
             set({
               isLoading: false,

@@ -21,14 +21,16 @@
 
 /* active Item */
 .activeItem {
-    color: #1890FF;
-    border-right: 4px solid #1890FF;
-    background-color: #f5f5ff;
+    color: var(--active-primary-color);
+    background-color: var(--active-secondary-color);
+    border-right: 4px solid var(--active-primary-color);
 }
 
 .activeItem p {
-    color: #1890FF;
+    color: var(--active-primary-color);
+    font-weight: bold;
 }
+
 
 /* ------------- */
 

@@ -10,6 +10,10 @@
   /* text-colors */
   --primary-text-color: #333;
   --secondary-text-color: #6c757d;
+
+  /* side menu color */
+  --active-primary-color: #1890FF;
+  --active-secondary-color: #f5f5ff;
 }
 
 .App {

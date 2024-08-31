@@ -73,7 +73,7 @@ export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, 
             {isEdit ? (
                 <input
                     type="text" placeholder="Enter playlist name" readOnly={!isEdit} name={inputTitle} value={isEdit ? inputTitle : playlist.title}
-                    onChange={handleChange} 
+                    onChange={handleChange}
                     className={`${styles.inputField} ${isEdit ? styles.inputEdit : ''}`}
                 />
             ) :
