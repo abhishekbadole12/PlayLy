@@ -7,16 +7,30 @@ const usePlaylistStore = create((set) => ({
   isLoading: false,
   isSucceed: false,
 
-  // Get Playlists
+  // Get Playlist's
   getPlaylists: async () => {
     try {
       const { data } = await api.get("/playlists/");
-
       set({ playlists: data });
     } catch (error) {
       const errorMessage =
         error?.response?.data?.message || "Failed to get Playlists";
       throw new Error(errorMessage);
+    }
+  },
+
+  // Get Playlist
+  getPlaylist: async (_id) => {
+    const playlistId = _id;
+    set({ isLoading: true, isSucceed: false });
+    try {
+      const { data } = await api.get(`/playlists/${playlistId}`);
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "Failed to get playlist";
+      throw new Error(errorMessage);
+    } finally {
+      set({ isLoading: false, isSucceed: true });
     }
   },
 
@@ -81,6 +95,23 @@ const usePlaylistStore = create((set) => ({
     } catch (error) {
       console.log(error);
 
+      const errorMessage =
+        error?.response?.data?.message || "Failed to update playlist";
+      throw new Error(errorMessage);
+    }
+  },
+
+  // Add/Remove Song From Playlist
+  addRemoveSong: async (playlistId, songId) => {
+    try {
+      const { data, status } = await api.post(
+        `/playlists/${playlistId}/${songId}`,
+        { title }
+      );
+      if (status === 200 && data) {
+        console.log(data);
+      }
+    } catch (error) {
       const errorMessage =
         error?.response?.data?.message || "Failed to update playlist";
       throw new Error(errorMessage);

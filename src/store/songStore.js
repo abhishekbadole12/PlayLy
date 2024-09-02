@@ -11,7 +11,7 @@ const useSongStore = create((set) => ({
   getSongs: async () => {
     try {
       set({ isLoading: true });
-      const { data } = await api.get("/songs/", { withCredentials: true });
+      const { data } = await api.get("/songs/");
       set({ songs: data });
     } catch (error) {
       const errorMessage =
@@ -26,7 +26,7 @@ const useSongStore = create((set) => ({
   getTrendingSongs: async () => {
     try {
       set({ isLoading: true });
-      const { data } = await api.get("/songs/trendings", { withCredentials: true });
+      const { data } = await api.get("/songs/trendings");
       set({ songs: data });
     } catch (error) {
       const errorMessage =

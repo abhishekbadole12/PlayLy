@@ -66,14 +66,32 @@
 }
 
 /* Table Action Buttons */
-.playPauseButton svg {
+.actionIcons {
     cursor: pointer;
 }
 
-.playButton {
+.actionIcons svg {
+    font-size: 1.25rem;
+    margin-right: .75rem;
+    color: var(--secondary-text-color);
+}
+
+.actionIcons svg:hover {
+    color: black;
+}
+
+.actionIcons svg:last-child {
+    margin-right: 0;
+}
+
+.actionIcons .playIcon {
     color: #FDB927;
 }
 
-.pauseButton {
+.actionIcons .playIcon:hover {
+    color: var(--primary-color);
+}
+
+.pauseIcon {
     color: var(--primary-color);
 }

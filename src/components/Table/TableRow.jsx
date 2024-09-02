@@ -1,5 +1,9 @@
 import styles from './Table.module.css'
 import { FaCirclePlay, FaCirclePause, FaDownload } from "react-icons/fa6";
+import { MdAddCircle } from "react-icons/md";
+import { MdDownloadForOffline } from "react-icons/md";
+import { FaCloudDownloadAlt } from "react-icons/fa";
+
 import { formatDuration } from '../../utils/formateDuration';
 
 export default function TableRow({ song, isPlaying, currentSong, handlePlayIcon }) {
@@ -35,13 +39,16 @@ export default function TableRow({ song, isPlaying, currentSong, handlePlayIcon 
 
             <td>{playCount}</td>
 
-            <td className={styles.playPauseButton}>
-                {currentSong && isPlaying && currentSong._id === _id ?
-                    <FaCirclePause size={35} className={styles.pauseButton} onClick={() => handlePlayIcon(_id)} />
-                    :
-                    <FaCirclePlay size={35} className={styles.playButton} onClick={() => handlePlayIcon(_id)} />}
+            <td className={styles.actionIcons}>
 
-                <FaDownload size={25} className={styles.pauseButton} />
+                {currentSong && isPlaying && currentSong._id === _id ?
+                    <FaCirclePause className={styles.pauseIcon} onClick={() => handlePlayIcon(_id)} />
+                    :
+                    <FaCirclePlay className={styles.playIcon} onClick={() => handlePlayIcon(_id)} />}
+
+                <FaCloudDownloadAlt />
+
+                <MdAddCircle />
             </td>
 
         </tr>
