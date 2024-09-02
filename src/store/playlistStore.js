@@ -3,7 +3,6 @@ import { api } from "../services/api";
 
 const usePlaylistStore = create((set) => ({
   playlists: [],
-  activePlaylist: null,
   isLoading: false,
   isSucceed: false,
 
@@ -103,15 +102,17 @@ const usePlaylistStore = create((set) => ({
 
   // Add/Remove Song From Playlist
   addRemoveSong: async (playlistId, songId) => {
+    set({ isLoading: true, isSucceed: false });
     try {
-      const { data, status } = await api.post(
-        `/playlists/${playlistId}/${songId}`,
-        { title }
+      const { data, status } = await api.put(
+        `/playlists/${playlistId}/${songId}`
       );
       if (status === 200 && data) {
-        console.log(data);
+        set({ isLoading: false, isSucceed: true });
+        return data
       }
     } catch (error) {
+      console.log(error);
       const errorMessage =
         error?.response?.data?.message || "Failed to update playlist";
       throw new Error(errorMessage);

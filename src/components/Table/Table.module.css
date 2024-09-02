@@ -68,6 +68,7 @@
 /* Table Action Buttons */
 .actionIcons {
     cursor: pointer;
+    position: relative;
 }
 
 .actionIcons svg {
@@ -94,4 +95,28 @@
 
 .pauseIcon {
     color: var(--primary-color);
+}
+
+/* Modal */
+
+.playlistItemsModal {
+    position: absolute;
+    right: 0;
+    list-style: none;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    z-index: 999;
+    background-color: #fff;
+}
+
+.playlistItem {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+.playlistItem:hover {
+    background-color: #e5e7eb;
+    color: #374151;
 }
