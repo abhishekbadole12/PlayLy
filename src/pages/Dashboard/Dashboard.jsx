@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Dashboard.module.css"
 import { UserContext } from "../../App";
 import { DotLoader } from "react-spinners";
@@ -17,16 +17,20 @@ import useSongStore from "../../store/songStore";
 
 
 export default function Dashboard() {
+
     const navigation = useNavigate();
-    const params = useParams();
+    const location = useLocation();
+
+    const queryParams = new URLSearchParams(location.search);
+    const query = queryParams.get("song");
+
+    const { mediaPlayer, setMediaPlayer, currentSong } = useContext(UserContext);
 
     // Store's
-    const { getPlaylists } = usePlaylistStore()
-    const { getSongs, getTrendingSongs } = useSongStore()
+    const { getPlaylists } = usePlaylistStore();
+    const { getSongs, getTrendingSongs, getPlaylistSongs } = useSongStore()
 
-    const { mediaPlayer } = useContext(UserContext);
-
-    const [isPlaying, setIsPlaying] = useState(false);
+    const [isAside, setIsAside] = useState(true);
 
     const handlePrev = () => {
         // Handle previous
@@ -36,17 +40,14 @@ export default function Dashboard() {
         // Handle next
     }
 
-    // Handle Create New Playlist
-    const handleCreatePlaylist = async (data) => {
-        // Create logic
-    }
-
     useEffect(() => {
         const fetchSongs = async () => {
             try {
-                if (params.playlistName == 'trendings') {
+                if (queryParams.get("id")) {
+                    await getPlaylistSongs(queryParams.get("id"))
+                } else if (queryParams.get("playlist") == 'trendings') {
                     await getTrendingSongs()
-                } else {
+                } else if (queryParams.get("playlist") == "songs") {
                     await getSongs();
                 }
             } catch (error) {
@@ -77,36 +78,26 @@ export default function Dashboard() {
         fetchData();
     }, [])
 
+    const memorizedAside = useMemo(() => isAside, [isAside]);
+
     return (
         <div className={styles.Dashboard}>
+            <SideMenu isAside={memorizedAside} setIsAside={setIsAside} />
 
-            <SideMenu
-                onCreate={handleCreatePlaylist}
-            />
-
-            <section>
+            <section style={{ width: '100%' }}>
                 <Header />
 
                 {/* Only Admin Can access Upload */}
-                {params.playlistName === 'upload' ?
-
-                    <Upload />
-
-                    : <>
-
+                {query === 'upload' ? <Upload /> :
+                    <>
                         {/* <div className={styles.loadingContainer}>
                             <DotLoader loading={isLoading} color="#552583" />
                         </div> */}
 
-                        <Table
-                            isPlaying={isPlaying}
-                            setIsPlaying={setIsPlaying}
-                        />
+                        <Table />
 
                         {mediaPlayer && (
                             <Footer
-                                isPlaying={isPlaying}
-                                setIsPlaying={setIsPlaying}
                                 currentSong={currentSong}
                                 handlePrev={handlePrev}
                                 handleNext={handleNext}

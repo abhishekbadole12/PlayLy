@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useMemo, useState } from 'react'
 import { BrowserRouter as Router, Route, Routes, } from 'react-router-dom'
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
@@ -17,18 +17,20 @@ export default function App() {
   const [currentSong, setCurrentSong] = useState(null);
 
   const [mediaPlayer, setMediaPlayer] = useState(false);
-  
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const memorizedCurrentSong = useMemo(() => currentSong, [currentSong])
 
   return (
     <div className='App'>
       <AuthProvider>
-        <UserContext.Provider value={{ mediaPlayer, setMediaPlayer }}>
+        <UserContext.Provider value={{ mediaPlayer, setMediaPlayer, isPlaying, setIsPlaying, currentSong: memorizedCurrentSong, setCurrentSong }}>
           <Router>
             <Routes>
               <Route path='/' element={<Login />} />
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
-              <Route path='/dashboard/:playlistName' element={<PrivateRoute component={Dashboard} />} />
+              <Route path='/dashboard' element={<PrivateRoute component={Dashboard} />} />
             </Routes>
           </Router>
           {/* Toast */}

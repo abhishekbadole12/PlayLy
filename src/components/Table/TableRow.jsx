@@ -7,11 +7,8 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 
 import { formatDuration } from '../../utils/formateDuration';
 import usePlaylistStore from '../../store/playlistStore';
-import { UserContext } from '../../App';
 
 export default function TableRow({ song, isPlaying, currentSong, onPlay, onAddToPlaylist, inPlaylist }) {
-
-    const { activePlaylist } = useContext(UserContext);
 
     const { playlists, } = usePlaylistStore();
 
@@ -28,7 +25,14 @@ export default function TableRow({ song, isPlaying, currentSong, onPlay, onAddTo
             setIsModal(false)
         }
     }
-    console.log(inPlaylist);
+
+    // Handle Download
+    const handleDownload = (url, filename) => {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.click();
+    };
 
     return (
         <tr>
@@ -62,16 +66,17 @@ export default function TableRow({ song, isPlaying, currentSong, onPlay, onAddTo
             <td className={styles.actionIcons}>
 
                 {currentSong && isPlaying && currentSong._id === _id ?
-                    <FaCirclePause className={styles.pauseIcon} onClick={() => onPlay(_id)} />
+                    <FaCirclePause className={styles.pauseIcon} onClick={() => onPlay(song)} />
                     :
-                    <FaCirclePlay className={styles.playIcon} onClick={() => onPlay(_id)} />}
+                    <FaCirclePlay className={styles.playIcon} onClick={() => onPlay(song)} />}
 
-                <FaCloudDownloadAlt />
+                <FaCloudDownloadAlt onClick={() => handleDownload(firebaseUrl, `${title}.mp3`)} />
 
+                {inPlaylist ?
+                    <IoIosCheckmarkCircle style={{ color: 'green' }} onClick={() => setIsModal(prev => !prev)} />
+                    : <MdAddCircle onClick={() => setIsModal(prev => !prev)} />}
 
-
-                {inPlaylist ? <IoIosCheckmarkCircle style={{color:'green'}} onClick={() => setIsModal(prev => !prev)}/> : <MdAddCircle onClick={() => setIsModal(prev => !prev)}/>}
-
+                {/* Modal */}
                 {isModal && playlists.length && (
                     <ul className={styles.playlistItemsModal}>
                         {playlists.map((playlist) => (

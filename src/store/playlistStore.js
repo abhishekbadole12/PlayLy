@@ -18,20 +18,7 @@ const usePlaylistStore = create((set) => ({
     }
   },
 
-  // Get Playlist
-  getPlaylist: async (_id) => {
-    const playlistId = _id;
-    set({ isLoading: true, isSucceed: false });
-    try {
-      const { data } = await api.get(`/playlists/${playlistId}`);
-    } catch (error) {
-      const errorMessage =
-        error?.response?.data?.message || "Failed to get playlist";
-      throw new Error(errorMessage);
-    } finally {
-      set({ isLoading: false, isSucceed: true });
-    }
-  },
+
 
   // Create Playlist
   createPlaylist: async (title) => {
@@ -109,7 +96,7 @@ const usePlaylistStore = create((set) => ({
       );
       if (status === 200 && data) {
         set({ isLoading: false, isSucceed: true });
-        return data
+        return data;
       }
     } catch (error) {
       console.log(error);
@@ -119,10 +106,6 @@ const usePlaylistStore = create((set) => ({
     }
   },
 
-  // handle Active Playlisst
-  onActivePlaylist: (playlist) => {
-    set({ activePlaylist: playlist });
-  },
 }));
 
 export default usePlaylistStore;

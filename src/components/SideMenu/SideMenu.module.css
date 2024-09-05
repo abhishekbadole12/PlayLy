@@ -3,6 +3,23 @@
     height: 100vh;
     box-shadow: -1px 0px 0px 0px rgba(0, 0, 0, 0.05) inset;
     padding: 2rem 0;
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(0);
+}
+
+.sideMenu.hidden {
+    transform: translateX(-100%); 
+}
+
+@media (max-width: 768px) {
+    .sideMenu {
+        transform: translateX(-100%);
+    }
+
+    .sideMenu.show {
+        transform: translateX(0);
+    }
 }
 
 .projectTitle {
@@ -77,6 +94,7 @@
 
 /* ----------- Footer ( Logout Button) ---------- */
 .asideItem:nth-last-child(2) {
+    width: 100%;
     position: fixed;
     border: none;
     /* margin-bottom: 0; */
@@ -101,11 +119,11 @@
     align-items: center;
     justify-content: center;
     padding: 5px 2.5px;
+    cursor: pointer;
 }
 
 .asideToggle:hover {
     background-color: var(--primary-color);
-    cursor: pointer;
 }
 
 .asideToggle div {

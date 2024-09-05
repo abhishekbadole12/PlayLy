@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo } from "react";
+import { useContext } from "react";
 import styles from "./Table.module.css"
 import TableHead from "./TableHead";
 import TableRow from "./TableRow";
@@ -8,22 +8,20 @@ import useSongStore from "../../store/songStore";
 import usePlaylistStore from "../../store/playlistStore";
 import { showErrorToast, showToast } from "../../utils/showToast";
 
-export default function Table({ isPlaying, setIsPlaying }) {
+export default function Table() {
 
-    const { currentSong, setCurrentSong, activePlaylist } = useContext(UserContext);
+    const { currentSong, setCurrentSong, isPlaying, setIsPlaying, setMediaPlayer } = useContext(UserContext);
 
     const { songs } = useSongStore();
 
     const { addRemoveSong } = usePlaylistStore();
-    // Memoize playlist songs to avoid recalculating on every render
-    const playlistSongs = useMemo(() => {       
-        return activePlaylist?.songs || [];
-    }, [activePlaylist]);
+
     // handle table play button
-    const handlePlayIcon = (id) => {
-        const addSong = songs.length > 0 && songs.find((song) => song._id === id)
-        setIsPlaying(prev => currentSong && currentSong._id === id ? !prev : true)
-        setCurrentSong(addSong)
+    const handlePlayIcon = (s) => {
+        const addSong = songs.length > 0 && songs.find((song) => song._id === s._id);
+        setIsPlaying(prev => currentSong && currentSong._id === s._id ? !prev : true);
+        setCurrentSong(addSong);
+        setMediaPlayer(true);
     };
 
     // Add Song To Playlist
@@ -38,11 +36,6 @@ export default function Table({ isPlaying, setIsPlaying }) {
         }
     }
 
-
-
-    console.log(activePlaylist);
-    
-
     return (
         <table className={styles.table}>
             <TableHead />
@@ -50,7 +43,6 @@ export default function Table({ isPlaying, setIsPlaying }) {
             <tbody className={styles.tbody}>
                 {songs.length ?
                     songs.map((song) => {
-                        const inPlaylist = playlistSongs?.includes(song._id);
                         return (
                             <TableRow key={song._id}
                                 song={song}
@@ -58,7 +50,7 @@ export default function Table({ isPlaying, setIsPlaying }) {
                                 currentSong={currentSong}
                                 onPlay={handlePlayIcon}
                                 onAddToPlaylist={handleAddToPlaylist}
-                                inPlaylist={inPlaylist}
+                                inPlaylist={""} // when song is in paylist (boolean)
                             />
                         )
                     }) :

@@ -17,7 +17,7 @@
 
 .table th,
 .table tr {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .songName {
@@ -94,7 +94,7 @@
 }
 
 .pauseIcon {
-    color: var(--primary-color);
+    color: var(--primary-color) !important;
 }
 
 /* Modal */
@@ -104,7 +104,7 @@
     right: 0;
     list-style: none;
     border-radius: 4px;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     z-index: 999;
     background-color: #fff;
 }
@@ -114,6 +114,12 @@
     font-size: 0.875rem;
     color: #6b7280;
     cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.playlistItem:last-child {
+    border-bottom: none;
+
 }
 
 .playlistItem:hover {

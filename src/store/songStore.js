@@ -3,6 +3,7 @@ import { api } from "../services/api";
 
 const useSongStore = create((set) => ({
   songs: [],
+  activeSong: {},
   isLoading: false,
   isUploading: false,
   isSucceed: false, // Upload - success
@@ -19,6 +20,22 @@ const useSongStore = create((set) => ({
       throw new Error(errorMessage);
     } finally {
       set({ isLoading: false });
+    }
+  },
+
+  // Get Playlist
+  getPlaylistSongs: async (_id) => {
+    const playlistId = _id;
+    set({ isLoading: true, isSucceed: false });
+    try {
+      const { data } = await api.get(`/playlists/${playlistId}`);
+      set({ songs: data });
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "Failed to get playlist";
+      throw new Error(errorMessage);
+    } finally {
+      set({ isLoading: false, isSucceed: true });
     }
   },
 
@@ -65,6 +82,11 @@ const useSongStore = create((set) => ({
         error?.response?.data?.message || "Failed to upload Song";
       throw new Error(errorMessage);
     }
+  },
+
+  // Ative Song
+  activeSong: (data) => {
+    set({ data });
   },
 }));
 

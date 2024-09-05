@@ -31,7 +31,8 @@ export default function Login() {
     try {
       await login(userDetails);
       setUserDetails({ email: "", password: "" })
-      navigate('/dashboard/songs')
+      navigate(`/dashboard?playlist=songs`)
+      
     } catch (error) {
       setUserDetails({ email: "", password: "" })
       setErrorMsg(error?.message)

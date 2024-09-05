@@ -21,17 +21,19 @@ footer {
 .backGrey {
     width: 1184px;
     height: 10px;
-    border-radius: 100px;
+    border-radius: 125px;
     opacity: 0.5;
     background-color: var(--secondary-text-color);
 }
 
 .steps {
     top: 0;
+    left: 0;
     position: absolute;
-    border-radius: 100px;
+    border-radius: 125px;
     height: 100%;
     background-color: var(--primary-color);
+    transition: 2s ease;
 }
 
 /* --------  Footer Bottom    ---- */
@@ -40,6 +42,7 @@ footer {
     margin-top: 1rem;
     display: flex;
     position: relative;
+    padding: 0 0.5rem;
 }
 
 .footerBottom {
@@ -75,7 +78,7 @@ footer {
 
 .songTitle {
     color: var(--primary-text-color);
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     margin-bottom: 0.5rem;
 }
 
@@ -90,31 +93,102 @@ footer {
 .songArtist,
 .songDuration {
     color: var(--secondary-text-color);
-    font-size: 1rem;
+    font-size: .95rem;
     margin-bottom: 0.5rem;
 }
 
 /* ----------   Buttons   ---------- */
 
 .playLogicButtonContainer {
-    font-size: 3.05rem;
+    font-size: 3rem;
     display: flex;
     gap: 16.67px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    padding: 1.25rem;
+    overflow: hidden;
+    background-color: #fff;
 }
 
 .playLogicButtonContainer svg {
     color: var(--secondary-text-color);
 }
 
-.pauseButton {
-    color: var(--primary-color);
+.pauseIcon {
+    color: var(--primary-color) !important;
+}
+
+.playIcon {
+    color: #FDB927 !important;
 }
 
 .playLogicButtonContainer svg:hover {
     cursor: pointer;
     color: var(--primary-color);
+}
+
+/* Volume Container */
+
+.volumeContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
+    rotate: 270deg;
+    width: 90px;
+    position: absolute;
+    right: 1rem;
+}
+
+.volumeSlider {
+    width: 100%;
+    height: 100%;
+    height: 8px;
+    background-color: #ababab;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    background-color: var(--primary-color);
+}
+
+.volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    /* background-color: #333; */
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.muteIcon {
+    color: var(--secondary-text-color);
+    rotate: 90deg;
+    position: absolute;
+    left: -1rem;
+    cursor: pointer;
+}
+
+.muteIcon:hover {
+    color: var(--primary-color);
+}
+
+.volumeTag {
+    position: absolute;
+    top: 1.25rem;
+    rotate: 90deg;
+    font-size: .75rem;
+}
+
+
+/* Close Footer Icon */
+.closeFooterIcon {
+    cursor: pointer;
+    font-size: 1.15rem;
+    position: absolute;
+    right: 0;
+    color: red;
 }

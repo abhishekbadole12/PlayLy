@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import styles from "./SideMenu.module.css";
 
@@ -17,21 +17,27 @@ import { showErrorToast, showToast } from "../../utils/showToast";
 
 // hook
 import { useIsAdmin } from "../../hooks/isAdmin";
+import useSongStore from "../../store/songStore";
 
 
-export default function SideMenu({ }) {
+export default function SideMenu({ isAside, setIsAside }) {
     const navigate = useNavigate();
-    const params = useParams()
+    const params = useParams();
+
+    const location = useLocation();
+
+    const queryParams = new URLSearchParams(location.search);
+    const query = queryParams.get("playlist");
 
     const isAdmin = useIsAdmin()
 
-    const { playlists, createPlaylist, removePlaylist, activePlaylist,
-        onActivePlaylist, updatePlaylist, isLoading } = usePlaylistStore();
     const { logout } = useAuthStore();
 
-    const [isNewPlaylist, setIsNewPlaylist] = useState(false);
+    const { playlists, createPlaylist, removePlaylist, updatePlaylist } = usePlaylistStore();
 
-    const isAside = true;
+    const { getSongs, getTrendingSongs, getPlaylistSongs } = useSongStore()
+
+    const [isNewPlaylist, setIsNewPlaylist] = useState(false);
 
     // Handle Update Playlist
     const handleUpdate = async (data) => {
@@ -68,23 +74,35 @@ export default function SideMenu({ }) {
     const handleClick = (playlist) => {
         let path;
         if (typeof playlist === 'object') {
-            onActivePlaylist(playlist)
+            getPlaylistSongs(playlist._id)
             path = playlist.title.trim().replace(/\s+/g, '-')
-        } else {
+            navigate(`/dashboard?playlist=${path}&&id=${playlist._id}`);
+        } else if (playlist === 'trendings') {
             path = playlist
-            onActivePlaylist(playlist)
-        }
-        navigate(`/dashboard/${path}`);
+            getTrendingSongs()
+            navigate(`/dashboard?playlist=${path}`);
+        } else if (playlist === 'songs') {
+            path = playlist
+            getSongs()
+            navigate(`/dashboard?playlist=${path}`);
 
+        } else if (playlist === 'upload') {
+            path = playlist
+            navigate(`/dashboard?song=${path}`);
+        }
+    };
+
+    const toggleAside = () => {
+        setIsAside(!isAside);
     };
 
     return (
-        <aside className={styles.sideMenu}>
+        <aside className={`${styles.sideMenu} ${!isAside ? styles.hidden : ""}`}>
             <div style={{ position: 'relative' }}>
                 <h2 className={styles.projectTitle}>PLAY LY</h2>
 
                 {/* Aside/SideMenu Toggle */}
-                <div className={`${styles.asideToggle} ${!isAside ? styles.outside : styles.inside}`}>
+                <div className={`${styles.asideToggle} ${!isAside ? styles.outside : styles.inside}`} onClick={toggleAside}>
                     <div />
                 </div>
             </div>
@@ -92,13 +110,13 @@ export default function SideMenu({ }) {
             <ul className={styles.asideItems}>
                 <h5 className={styles.asideItemTitle}>General</h5>
 
-                <li className={`${styles.asideItem} ${params.playlistName === "trendings" ? styles.activeItem : ""}`}
+                <li className={`${styles.asideItem} ${query === "trendings" ? styles.activeItem : ""}`}
                     onClick={() => handleClick("trendings")}>
                     <CiGrid42 className={styles.playlistIcon} />
                     <p className={styles.playlistTitle}>Trending Songs</p>
                 </li>
 
-                <li className={`${styles.asideItem} ${params.playlistName === 'songs' ? styles.activeItem : ""}`}
+                <li className={`${styles.asideItem} ${query === 'songs' ? styles.activeItem : ""}`}
                     onClick={() => handleClick("songs")}>
                     <CiGrid42 className={styles.playlistIcon} />
                     <p className={styles.playlistTitle}>Songs</p>
@@ -121,10 +139,7 @@ export default function SideMenu({ }) {
                             onCancel={handleCancel}
                             onUpdate={handleUpdate}
                             onDelete={handleRemove}
-                            isActive={typeof activePlaylist === 'object' ?
-                                playlist._id == activePlaylist?._id
-                                : params.playlistName == playlist.title.trim().replace(/\s+/g, '-')
-                            }
+                            isActive={query == playlist.title.trim().replace(/\s+/g, '-')}
                         />
                     ))
                 )}
@@ -141,17 +156,17 @@ export default function SideMenu({ }) {
 
                 {/* Upload Songs - Admin */}
                 {isAdmin && (
-                    <li className={`${styles.asideItem} ${params.playlistName === "upload" ? styles.activeItem : ""}`}
+                    <li className={`${styles.asideItem} ${queryParams.get('song') === "upload" ? styles.activeItem : ""}`}
                         onClick={() => handleClick("upload")}>
                         <FaCloudUploadAlt />
-                        <p>Upload Songs</p>
+                        <p className={styles.playlistTitle}>Upload Songs</p>
                     </li>
                 )}
 
                 {/* Logout */}
                 <li className={styles.asideItem} onClick={() => logout()}>
                     <BiLogInCircle />
-                    <p>Logout</p>
+                    <p className={styles.playlistTitle}>Logout</p>
                 </li>
             </ul>
 
