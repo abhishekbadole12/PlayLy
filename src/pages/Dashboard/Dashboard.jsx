@@ -24,21 +24,13 @@ export default function Dashboard() {
     const queryParams = new URLSearchParams(location.search);
     const query = queryParams.get("song");
 
-    const { mediaPlayer, setMediaPlayer, currentSong } = useContext(UserContext);
+    const { mediaPlayer, currentSong } = useContext(UserContext);
 
     // Store's
     const { getPlaylists } = usePlaylistStore();
     const { getSongs, getTrendingSongs, getPlaylistSongs } = useSongStore()
 
     const [isAside, setIsAside] = useState(true);
-
-    const handlePrev = () => {
-        // Handle previous
-    }
-
-    const handleNext = () => {
-        // Handle next
-    }
 
     useEffect(() => {
         const fetchSongs = async () => {
@@ -96,13 +88,7 @@ export default function Dashboard() {
 
                         <Table />
 
-                        {mediaPlayer && (
-                            <Footer
-                                currentSong={currentSong}
-                                handlePrev={handlePrev}
-                                handleNext={handleNext}
-                            />
-                        )}
+                        {mediaPlayer && <Footer currentSong={currentSong} />}
                     </>
                 }
             </section>

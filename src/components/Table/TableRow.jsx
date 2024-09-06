@@ -1,18 +1,23 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import styles from './Table.module.css'
-import { FaCirclePlay, FaCirclePause, FaDownload } from "react-icons/fa6";
+import { FaCirclePlay, FaCirclePause } from "react-icons/fa6";
 import { MdAddCircle } from "react-icons/md";
 import { FaCloudDownloadAlt } from "react-icons/fa";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 
+// helper fun
 import { formatDuration } from '../../utils/formateDuration';
+
+// Store's
 import usePlaylistStore from '../../store/playlistStore';
+import useSongStore from '../../store/songStore';
 
 export default function TableRow({ song, isPlaying, currentSong, onPlay, onAddToPlaylist, inPlaylist }) {
 
     const { playlists, } = usePlaylistStore();
+    const { updateDownloadCount } = useSongStore();
 
-    const { _id, source, imageUrl, playCount, duration, artist, album, title, firebaseUrl } = song;
+    const { _id, source, imageUrl, playCount, downloadCount, duration, artist, title, firebaseUrl } = song;
 
     const [isModal, setIsModal] = useState(false);
 
@@ -27,11 +32,15 @@ export default function TableRow({ song, isPlaying, currentSong, onPlay, onAddTo
     }
 
     // Handle Download
-    const handleDownload = (url, filename) => {
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = filename;
-        link.click();
+    const handleDownload = async (url) => {
+        try {
+            const response = await updateDownloadCount(_id);
+            if (response) {
+                window.open(url, '_blank');
+            }
+        } catch (error) {
+            showToast(error.message)
+        }
     };
 
     return (
@@ -62,6 +71,8 @@ export default function TableRow({ song, isPlaying, currentSong, onPlay, onAddTo
             <td>{source}</td>
 
             <td>{playCount}</td>
+
+            <td>{downloadCount}</td>
 
             <td className={styles.actionIcons}>
 

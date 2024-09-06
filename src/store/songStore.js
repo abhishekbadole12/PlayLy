@@ -84,6 +84,48 @@ const useSongStore = create((set) => ({
     }
   },
 
+  // Update - Song Download Count
+  updateDownloadCount: async (songId) => {
+    try {
+      const { data, status } = await api.put(`/songs/${songId}/download`);
+      if (data && status == 200) {
+        set((state) => ({
+          songs: state.songs.map((song) =>
+            song._id === songId
+              ? { ...song, downloadCount: data.downloadCount }
+              : song
+          ),
+        }));
+        return true;
+      }
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "Failed to download Song";
+      throw new Error(errorMessage);
+    }
+  },
+
+  // Update - Song Play Count
+  updatePlayCount: async(songId)=>{
+    try {
+      const { data, status } = await api.put(`/songs/${songId}/play`);
+      if (data && status == 200) {
+        set((state) => ({
+          songs: state.songs.map((song) =>
+            song._id === songId
+              ? { ...song, playCount: data.playCount }
+              : song
+          ),
+        }));
+        return true;
+      }
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "Failed to play Song";
+      throw new Error(errorMessage);
+    }
+  },
+
   // Ative Song
   activeSong: (data) => {
     set({ data });

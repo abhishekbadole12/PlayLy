@@ -12,17 +12,30 @@ export default function Table() {
 
     const { currentSong, setCurrentSong, isPlaying, setIsPlaying, setMediaPlayer } = useContext(UserContext);
 
-    const { songs } = useSongStore();
+    const { songs, updatePlayCount } = useSongStore();
 
     const { addRemoveSong } = usePlaylistStore();
 
-    // handle table play button
-    const handlePlayIcon = (s) => {
+    // Handle Table Play Icon
+    const handlePlayIcon = async (s) => {
         const addSong = songs.length > 0 && songs.find((song) => song._id === s._id);
-        setIsPlaying(prev => currentSong && currentSong._id === s._id ? !prev : true);
-        setCurrentSong(addSong);
-        setMediaPlayer(true);
+
+        if (currentSong && currentSong._id === s._id) {
+            setIsPlaying(prev => !prev);
+        } else {
+            try {
+                await updatePlayCount(s._id);
+            } catch (error) {
+                showErrorToast("Failed to update play count");
+                return;
+            }
+
+            setIsPlaying(true);
+            setCurrentSong(addSong);
+            setMediaPlayer(true);
+        }
     };
+
 
     // Add Song To Playlist
     const handleAddToPlaylist = async (p_id, s_id) => {
