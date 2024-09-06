@@ -13,6 +13,7 @@ import { formatDuration } from "../../utils/formateDuration";
 import { VscMute, VscUnmute } from "react-icons/vsc";
 import useSongStore from "../../store/songStore";
 import { IoCloseCircle } from "react-icons/io5";
+import { MoonLoader } from "react-spinners";
 
 export default function Footer() {
 
@@ -61,6 +62,8 @@ export default function Footer() {
     };
 
     const handleProgress = (progress) => {
+        console.log(progress);
+
         setProgress(progress.played * 100);
     };
 
@@ -72,13 +75,12 @@ export default function Footer() {
     const handleClosePlayer = () => {
         setIsPlaying(false);
         setMediaPlayer(false);
+        setCurrentSong(null);
     }
 
-    useEffect(() => {
-        if (currentSong) {
-
-        }
-    }, [isPlaying]);
+    const handleEnded = () => {
+        handleNext();
+    };
 
     return (
         <footer>
@@ -127,17 +129,33 @@ export default function Footer() {
                         url={currentSong?.firebaseUrl}
                         playing={isPlaying}
                         onProgress={handleProgress}
+                        onEnded={handleEnded}
                         ref={setPlayer}
                         width="0"
                         height="0"
+                        style={{ display: 'none' }}
                         volume={volume / 100}
+                        muted={volume === 0}
                     />
 
-                    {currentSong !== null && isPlaying ? (
-                        <FaCirclePause className={`${styles.playLogicButton} ${styles.pauseIcon}`} onClick={handlePlayPause} />
-                    ) : (
-                        <FaCirclePlay className={`${styles.playLogicButton} ${styles.playIcon}`} onClick={handlePlayPause} />
-                    )}
+                    <div className={styles.mainBtn}>
+
+                        {currentSong !== null && isPlaying ? (
+                            <FaCirclePause className={`${styles.playLogicButton} ${styles.pauseIcon}`} onClick={handlePlayPause} />
+                        ) : (
+                            <FaCirclePlay className={`${styles.playLogicButton} ${styles.playIcon}`} onClick={handlePlayPause} />
+                        )}
+
+                        {/* <div style={{
+                            position: 'absolute',
+                            left: '50%',
+                            top: '47%',
+                            transform: 'translate(-50%, -50%)',
+                        }}>
+                            <MoonLoader size={47} />
+                        </div> */}
+                    </div>
+
 
                     <MdOutlineSkipNext className={styles.playLogicButton} onClick={handleNext} />
                 </div>

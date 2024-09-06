@@ -9,6 +9,9 @@
 }
 
 .sideMenu.hidden {
+    min-width: unset;
+    width: unset;
+
     transform: translateX(-100%); 
 }
 

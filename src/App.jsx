@@ -21,6 +21,10 @@ export default function App() {
 
   const memorizedCurrentSong = useMemo(() => currentSong, [currentSong])
 
+  // if(user){
+ // Add private routes here
+  // }
+
   return (
     <div className='App'>
       <AuthProvider>

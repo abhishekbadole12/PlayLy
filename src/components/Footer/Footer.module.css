@@ -100,19 +100,18 @@ footer {
 /* ----------   Buttons   ---------- */
 
 .playLogicButtonContainer {
-    font-size: 3rem;
     display: flex;
-    gap: 16.67px;
+    gap: 18px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 1.25rem;
+    padding: 1.24rem;
     overflow: hidden;
-    background-color: #fff;
 }
 
 .playLogicButtonContainer svg {
+    font-size: 3rem;
     color: var(--secondary-text-color);
 }
 
@@ -122,6 +121,10 @@ footer {
 
 .playIcon {
     color: #FDB927 !important;
+}
+
+.mainBtn {
+    position: relative;
 }
 
 .playLogicButtonContainer svg:hover {
@@ -151,17 +154,6 @@ footer {
     cursor: pointer;
     outline: none;
     background-color: var(--primary-color);
-}
-
-.volumeSlider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    /* background-color: #333; */
-    background-color: var(--primary-color);
-    border-radius: 50%;
-    cursor: pointer;
 }
 
 .muteIcon {

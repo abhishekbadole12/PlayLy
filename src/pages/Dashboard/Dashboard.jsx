@@ -28,9 +28,9 @@ export default function Dashboard() {
 
     // Store's
     const { getPlaylists } = usePlaylistStore();
-    const { getSongs, getTrendingSongs, getPlaylistSongs } = useSongStore()
+    const { getSongs, getTrendingSongs, getPlaylistSongs, isLoading } = useSongStore()
 
-    const [isAside, setIsAside] = useState(true);
+    const [isAside, setIsAside] = useState(false);
 
     useEffect(() => {
         const fetchSongs = async () => {
@@ -82,11 +82,12 @@ export default function Dashboard() {
                 {/* Only Admin Can access Upload */}
                 {query === 'upload' ? <Upload /> :
                     <>
-                        {/* <div className={styles.loadingContainer}>
-                            <DotLoader loading={isLoading} color="#552583" />
-                        </div> */}
-
-                        <Table />
+                        {isLoading ?
+                            <div className={styles.loadingContainer}>
+                                <DotLoader loading={isLoading} color="#552583" />
+                            </div>
+                            :
+                            <Table />}
 
                         {mediaPlayer && <Footer currentSong={currentSong} />}
                     </>
