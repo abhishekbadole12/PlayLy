@@ -1,39 +1,56 @@
 /* footer */
 footer {
+    width: calc(100vw - 275px);
     position: fixed;
-    bottom: 2rem;
-    backdrop-filter: blur(8px);
+    bottom: 0;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 /* Progress Bar */
-
 .progressBarContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 1rem 0;
+    height: 6px;
+    background-color: #e0e0e0;
+    position: relative;
+    border-radius: 3px;
 }
 
 .progressBar {
+    width: 100%;
+    height: 100%;
     position: relative;
 }
 
 .backGrey {
-    width: 1184px;
-    height: 10px;
-    border-radius: 125px;
-    opacity: 0.5;
-    background-color: var(--secondary-text-color);
-}
-
-.steps {
+    background-color: #e0e0e0;
+    position: absolute;
     top: 0;
     left: 0;
-    position: absolute;
-    border-radius: 125px;
+    width: 100%;
     height: 100%;
+    border-radius: 3px;
+}
+
+.loaded {
+    background-color: #ccc;
+    /* Color for the loaded but not yet played portion */
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 3px;
+}
+
+.played {
     background-color: var(--primary-color);
-    transition: 2s ease;
+    /* Color for the played portion */
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 3px;
 }
 
 /* --------  Footer Bottom    ---- */
@@ -140,9 +157,9 @@ footer {
     justify-content: center;
     margin-left: 20px;
     rotate: 270deg;
-    width: 90px;
+    width: 70px;
     position: absolute;
-    right: 1rem;
+    right: 1.75rem;
 }
 
 .volumeSlider {
@@ -181,6 +198,7 @@ footer {
     cursor: pointer;
     font-size: 1.15rem;
     position: absolute;
-    right: 0;
+    right: 1rem;
+    bottom: 1rem;
     color: red;
 }

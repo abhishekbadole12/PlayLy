@@ -1,11 +1,11 @@
 .table {
-    margin-top: 100px;
+    /* margin-top: 100px; */
     width: 100%;
     border-collapse: collapse;
 }
 
 .tbody td {
-    color: var(--seondary-color);
+    color: var(--secondary-color);
     font-size: .85rem;
 }
 

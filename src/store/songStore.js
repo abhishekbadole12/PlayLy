@@ -106,15 +106,13 @@ const useSongStore = create((set) => ({
   },
 
   // Update - Song Play Count
-  updatePlayCount: async(songId)=>{
+  updatePlayCount: async (songId) => {
     try {
       const { data, status } = await api.put(`/songs/${songId}/play`);
       if (data && status == 200) {
         set((state) => ({
           songs: state.songs.map((song) =>
-            song._id === songId
-              ? { ...song, playCount: data.playCount }
-              : song
+            song._id === songId ? { ...song, playCount: data.playCount } : song
           ),
         }));
         return true;

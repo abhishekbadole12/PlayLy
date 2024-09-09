@@ -11,7 +11,14 @@ export default function Login() {
 
   const [userDetails, setUserDetails] = useState({ email: '', password: '' })
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [errorMsg, setErrorMsg] = useState(null)
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [isDemoAccount, setIsDemoAccount] = useState(false);
+
+  // Demo account credentials
+  const demoCredentials = {
+    email: import.meta.env.VITE_EMAIL,
+    password: import.meta.env.VITE_PASSWORD
+  };
 
   // handle toggle
   const togglePasswordVisibility = () => {
@@ -25,6 +32,17 @@ export default function Login() {
     }))
   }
 
+  // handle demo account checkbox change
+  const handleDemoAccountChange = (e) => {
+    setIsDemoAccount(e.target.checked);
+
+    if (e.target.checked) {
+      setUserDetails(demoCredentials);
+    } else {
+      setUserDetails({ email: '', password: '' });
+    }
+  };
+
   // handle submit
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -32,7 +50,7 @@ export default function Login() {
       await login(userDetails);
       setUserDetails({ email: "", password: "" })
       navigate(`/dashboard?playlist=songs`)
-      
+
     } catch (error) {
       setUserDetails({ email: "", password: "" })
       setErrorMsg(error?.message)
@@ -59,11 +77,24 @@ export default function Login() {
             onChange={handleChange}
           />
 
-          <div className={styles.eyeIcon} onClick={togglePasswordVisibility}>
-            {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-          </div>
+          {userDetails.password != '' &&
+            <div className={styles.eyeIcon} onClick={togglePasswordVisibility}>
+              {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+            </div>}
 
           {isError && <p className={styles.errorTag}>{errorMsg}</p>}
+        </div>
+
+        {/* Demo account checkbox */}
+        <div className={styles.demoAccount}>
+          <label>
+            <input
+              type="checkbox"
+              checked={isDemoAccount}
+              onChange={handleDemoAccountChange}
+            />
+            Use demo account
+          </label>
         </div>
 
         <p className={styles.label}>~ To register <Link to="/register"><i>Click here</i></Link></p>

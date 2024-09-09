@@ -30,7 +30,7 @@ export default function Dashboard() {
     const { getPlaylists } = usePlaylistStore();
     const { getSongs, getTrendingSongs, getPlaylistSongs, isLoading } = useSongStore()
 
-    const [isAside, setIsAside] = useState(false);
+    const [isAside, setIsAside] = useState(true);
 
     useEffect(() => {
         const fetchSongs = async () => {
@@ -76,7 +76,7 @@ export default function Dashboard() {
         <div className={styles.Dashboard}>
             <SideMenu isAside={memorizedAside} setIsAside={setIsAside} />
 
-            <section style={{ width: '100%' }}>
+            <section className={styles.section}>
                 <Header />
 
                 {/* Only Admin Can access Upload */}
@@ -87,10 +87,17 @@ export default function Dashboard() {
                                 <DotLoader loading={isLoading} color="#552583" />
                             </div>
                             :
-                            <Table />}
+                            <div className={styles.mainContent}>
+                            <Table />
+                          </div>
+                            
+                            }
 
-                        {mediaPlayer && <Footer currentSong={currentSong} />}
-                    </>
+                        {mediaPlayer && (
+                            <div className={styles.footer}>
+                                <Footer currentSong={currentSong} />
+                            </div>
+                        )}                    </>
                 }
             </section>
         </div >

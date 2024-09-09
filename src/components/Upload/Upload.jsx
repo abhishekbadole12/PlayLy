@@ -26,12 +26,11 @@ export default function Upload() {
     // Handle Submit
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrorMsg(null);
 
         try {
-            const { isSucceed } = await uploadSong(formData)
+            const isSucceed = await uploadSong(formData)
             if (isSucceed) {
-                showToast('Uploaded  Successfully')
+                showToast('Uploaded Successfully')
                 setFormData({ source: '', files: [] });
             }
         } catch (error) {

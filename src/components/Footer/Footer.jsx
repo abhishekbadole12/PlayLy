@@ -21,23 +21,25 @@ export default function Footer() {
     const { songs } = useSongStore()
 
     const [currentSongIndex, setCurrentSongIndex] = useState(null);
-    const [progress, setProgress] = useState(0);
+
+    const [progress, setProgress] = useState({ playedSeconds: 0, played: 0, loadedSeconds: 0, loaded: 0 });
     const [player, setPlayer] = useState(null);
-    const [volume, setVolume] = useState(70);
+    const [volume, setVolume] = useState(localStorage.getItem('volumn') || 0);
 
     // Set the current song index when currentSong is set
     useEffect(() => {
         if (currentSong) {
             const index = songs.findIndex(song => song._id === currentSong._id);
             setCurrentSongIndex(index);
+            setProgress({ playedSeconds: 0, played: 0, loadedSeconds: 0, loaded: 0 })
         }
     }, [currentSong, songs]);
 
     useEffect(() => {
         if (player) {
-            player.seekTo(progress / 100);
+            player.seekTo(progress.played);
         }
-    }, [progress, player]);
+    }, [progress.played, player]);
 
     const handlePlayPause = () => {
         setIsPlaying(prev => !prev);
@@ -47,7 +49,7 @@ export default function Footer() {
     const handleNext = () => {
         if (currentSongIndex !== null && currentSongIndex < songs.length - 1) {
             const nextSong = songs[currentSongIndex + 1];
-            setProgress(0)
+            setProgress({ playedSeconds: 0, played: 0, loadedSeconds: 0, loaded: 0 })
             setCurrentSong(nextSong);  // Update currentSong with next song
         }
     };
@@ -56,19 +58,18 @@ export default function Footer() {
     const handlePrevious = () => {
         if (currentSongIndex !== null && currentSongIndex > 0) {
             const previousSong = songs[currentSongIndex - 1];
-            setProgress(0)
+            setProgress({ playedSeconds: 0, played: 0, loadedSeconds: 0, loaded: 0 })
             setCurrentSong(previousSong);  // Update currentSong with previous song
         }
     };
 
     const handleProgress = (progress) => {
-        console.log(progress);
-
-        setProgress(progress.played * 100);
+        setProgress(progress)
     };
 
     const handleVolumeChange = (event) => {
         const newVolume = event.target.value;
+        localStorage.setItem('volumn', newVolume)
         setVolume(newVolume);
     }
 
@@ -89,10 +90,25 @@ export default function Footer() {
             <div className={styles.progressBarContainer}>
 
                 <div className={styles.progressBar}>
+                    {/* Full song background */}
                     <div className={styles.backGrey} />
-                    <div className={styles.steps} style={{ width: `${progress}%` }} />
-                </div>
 
+                    {/* Loaded part (loadedSeconds) */}
+                    <div
+                        className={styles.loaded}
+                        style={{
+                            width: `${(progress.loaded / 1) * 100}%`,
+                        }}
+                    />
+
+                    {/* Played part (playedSeconds) */}
+                    <div
+                        className={styles.played}
+                        style={{
+                            width: `${(progress.played / 1) * 100}%`,
+                        }}
+                    />
+                </div>
             </div>
 
             {/* Song Menu */}
@@ -116,7 +132,7 @@ export default function Footer() {
                         </li>
                         <li>
                             <p className={styles.songDuration}>
-                                <span className={styles.songLabel}>Duration: {formatDuration(currentSong?.duration)}</span>
+                                <span className={styles.songLabel}>Duration: {formatDuration(currentSong?.duration)} | Remaning: {formatDuration(currentSong?.duration - progress.playedSeconds)}</span>
                             </p>
                         </li>
                     </ul>
