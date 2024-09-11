@@ -1,4 +1,5 @@
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
+import useAuthStore from "../store/authStore";
 
 export default function RedirectToPreviousPage() {
     const location = useLocation();
