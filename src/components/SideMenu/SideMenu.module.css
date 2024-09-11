@@ -14,16 +14,6 @@
     transform: translateX(-215px);
 }
 
-@media (max-width: 768px) {
-    .sideMenu {
-        transform: translateX(-100%);
-    }
-
-    .sideMenu.show {
-        transform: translateX(0);
-    }
-}
-
 .projectTitle {
     color: var(--primary-color);
     text-align: center;

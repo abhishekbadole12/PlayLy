@@ -102,6 +102,10 @@ export default function SideMenu({ isAside, setIsAside }) {
         setIsAside(!isAside);
     };
 
+    const handleLogout = () => {
+        logout(navigate);  // Pass navigate to the store
+    };
+
     const AsideSmallStyle = { marginLeft: 'auto', position: 'absolute', right: '1rem', }
 
     return (
@@ -174,12 +178,13 @@ export default function SideMenu({ isAside, setIsAside }) {
                 )}
 
                 {/* New Playlist */}
-                {isNewPlaylist && !isAside &&
+                {isNewPlaylist && isAside &&
                     <Playlist
                         onPlaylistClick={handleClick}
                         onCancel={handleCancel}
                         onUpdate={handleUpdate}
                         isNew={isNewPlaylist}
+                        isAside={isAside}
                     />
                 }
 
@@ -198,7 +203,7 @@ export default function SideMenu({ isAside, setIsAside }) {
                 )}
 
                 {/* Logout */}
-                <li className={styles.asideItem} onClick={() => logout()}>
+                <li className={styles.asideItem} onClick={handleLogout}>
                     <BiLogInCircle />
                     <p className={styles.playlistTitle}>Logout</p>
 

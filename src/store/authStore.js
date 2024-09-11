@@ -63,13 +63,17 @@ const useAuthStore = create(
         }
       },
 
-      logout: () => {
+      logout: (navigate) => {
         set({
           authToken: null,
           username: null,
           isLoggedIn: false,
           isSuccess: false,
         });
+
+        if (navigate) {
+          navigate("/login"); 
+        }
       },
 
       isAuthenticated: () => {

@@ -24,7 +24,7 @@ export default function Footer({ isAside }) {
 
     const [progress, setProgress] = useState({ playedSeconds: 0, played: 0, loadedSeconds: 0, loaded: 0 });
     const [player, setPlayer] = useState(null);
-    const [volume, setVolume] = useState(localStorage.getItem('volumn') || 0);
+    const [volume, setVolume] = useState(localStorage.getItem('volumn') || 50);
 
     // Set the current song index when currentSong is set
     useEffect(() => {

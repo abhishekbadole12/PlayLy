@@ -1,18 +1,21 @@
 import { createContext, useState } from 'react'
-import { BrowserRouter as Router, Route, Routes, } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate, } from 'react-router-dom'
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
 import Dashboard from './pages/Dashboard/Dashboard'
 import './App.css'
-import PrivateRoute from './components/PrivateRoute'
 import { AuthProvider } from './components/AuthContext'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for toast notifications
+import useAuthStore from './store/authStore'
+import ProtectedRoutes from './components/PrivateRoute'
 
 // Context Created
 export const UserContext = createContext();
 
 export default function App() {
+
+  const { isAuthenticated } = useAuthStore()
 
   const [currentSong, setCurrentSong] = useState(null);
 
@@ -25,11 +28,13 @@ export default function App() {
         <UserContext.Provider value={{ mediaPlayer, setMediaPlayer, isPlaying, setIsPlaying, currentSong, setCurrentSong }}>
           <Router>
             <Routes>
-              <Route path='/' element={<Login />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<Register />} />
-              <Route path='/dashboard' element={<PrivateRoute component={Dashboard} />} />
-              {/* <Route path='*' element={<NotFound />} /> */}
+              <Route path='/' element={<Dashboard />} />
+              <Route path='/login' element={isAuthenticated() ? <Navigate to='/' /> : <Login />} />
+              <Route path='/register' element={isAuthenticated() ? <Navigate to='/' /> : <Register />} />
+              {/* Protected Routes */}
+              <Route element={<ProtectedRoutes auth={isAuthenticated()}/>}>
+                <Route path='/dashboard/*' element={<Dashboard />} />
+              </Route>
             </Routes>
           </Router>
           {/* Toast */}
