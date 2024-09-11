@@ -12,6 +12,7 @@ import useAuthStore from './store/authStore'
 import { AuthProvider } from './components/AuthContext'
 import ProtectedRoutes from './components/PrivateRoute'
 import { NotFound } from './components/NotFound'
+import RedirectToPreviousPage from './components/PreviousPage'
 
 // Context Created
 export const UserContext = createContext();
@@ -31,16 +32,16 @@ export default function App() {
         <UserContext.Provider value={{ mediaPlayer, setMediaPlayer, isPlaying, setIsPlaying, currentSong, setCurrentSong }}>
           <Router>
             <Routes>
-              <Route path='/' element={<Dashboard />} />
-              <Route path='/login' element={isAuthenticated() ? <Navigate to='/' /> : <Login />} />
-              <Route path='/register' element={isAuthenticated() ? <Navigate to='/' /> : <Register />} />
+              <Route path='/' element={isAuthenticated() ? <Dashboard /> : <Navigate to='/login' replace />} />
+              <Route path='/login' element={<RedirectToPreviousPage />} />
+              <Route path='/register' element={isAuthenticated() ? <Navigate to='/' replace /> : <Register />} />
 
               {/* Protected Routes */}
               <Route element={<ProtectedRoutes auth={isAuthenticated()} />}>
                 <Route path='/dashboard/*' element={<Dashboard />} />
               </Route>
 
-              {/* Not Found Route */}
+              {/* Catch-all route for Not Found */}
               <Route path='*' element={<NotFound />} />
             </Routes>
           </Router>
