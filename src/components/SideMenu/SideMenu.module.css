@@ -1,18 +1,17 @@
 .sideMenu {
-    min-width: 275px;
-    height: 100vh;
-    box-shadow: -1px 0px 0px 0px rgba(0, 0, 0, 0.05) inset;
+    width: 275px;
     padding: 2rem 0;
-    position: relative;
-    transition: transform 0.3s ease-in-out;
+    box-shadow: -1px 0px 0px 0px rgba(0, 0, 0, 0.05) inset;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    transition: transform 0.3s ease;
     transform: translateX(0);
 }
 
 .sideMenu.hidden {
-    min-width: unset;
-    width: unset;
-
-    transform: translateX(-100%); 
+    transform: translateX(-215px);
 }
 
 @media (max-width: 768px) {
@@ -32,6 +31,18 @@
     font-weight: 700;
     margin-bottom: 2rem;
     letter-spacing: .5px;
+}
+
+.asideSmallProjectTitle,
+.asideItemSmallTitle {
+    margin-left: auto;
+    position: absolute;
+    right: 1.1rem;
+}
+
+.asideItemSmallTitle {
+    font-size: 1.25rem;
+    color: #ABABAB;
 }
 
 .asideItems {
@@ -105,10 +116,16 @@
 }
 
 .sideMenu .asideItem:last-child {
+    width: 100%;
     border: none;
     margin-bottom: 0;
     bottom: 2rem;
     position: fixed;
+}
+
+.asideItemSmallItem {
+    position: absolute;
+    right: 1rem;
 }
 
 /* Toggle Button */

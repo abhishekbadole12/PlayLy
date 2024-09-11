@@ -1,8 +1,12 @@
 /* footer */
 footer {
-    width: calc(100vw - 275px);
-    position: fixed;
-    bottom: 0;
+    /* width: calc(100vw - 275px); */
+    
+    /* position: fixed; */
+    /* bottom: 0; */
+    /* left: 0; */
+    /* right: 0; */
+    min-width: 100%;
     padding: 1rem;
     backdrop-filter: blur(10px);
     border-top-left-radius: 10px;
@@ -35,7 +39,6 @@ footer {
 
 .loaded {
     background-color: #ccc;
-    /* Color for the loaded but not yet played portion */
     position: absolute;
     top: 0;
     left: 0;
@@ -45,7 +48,6 @@ footer {
 
 .played {
     background-color: var(--primary-color);
-    /* Color for the played portion */
     position: absolute;
     top: 0;
     left: 0;

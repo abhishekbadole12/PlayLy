@@ -9,6 +9,12 @@ import Playlist from "../Playlist/Playlist";
 import { CiGrid42 } from "react-icons/ci";
 import { BiLogInCircle } from "react-icons/bi";
 import { FaPlus, FaCloudUploadAlt } from "react-icons/fa";
+import { BiSolidPlaylist } from "react-icons/bi";
+import { HiTrendingUp } from "react-icons/hi";
+import { IoMdLogOut } from "react-icons/io";
+import { FaMusic } from "react-icons/fa";
+import { BsMusicNoteBeamed } from "react-icons/bs";
+import { MdOutlineCloudUpload } from "react-icons/md";
 
 // Store
 import usePlaylistStore from "../../store/playlistStore";
@@ -96,10 +102,15 @@ export default function SideMenu({ isAside, setIsAside }) {
         setIsAside(!isAside);
     };
 
+    const AsideSmallStyle = { marginLeft: 'auto', position: 'absolute', right: '1rem', }
+
     return (
         <aside className={`${styles.sideMenu} ${!isAside ? styles.hidden : ""}`}>
             <div style={{ position: 'relative' }}>
-                <h2 className={styles.projectTitle}>PLAY LY</h2>
+                {/* Project Title */}
+                <h2 className={styles.projectTitle}>PLAY LY
+                    {!isAside && <span className={styles.asideSmallProjectTitle}>Pl</span>}
+                </h2>
 
                 {/* Aside/SideMenu Toggle */}
                 <div className={`${styles.asideToggle} ${!isAside ? styles.outside : styles.inside}`} onClick={toggleAside}>
@@ -108,24 +119,41 @@ export default function SideMenu({ isAside, setIsAside }) {
             </div>
 
             <ul className={styles.asideItems}>
-                <h5 className={styles.asideItemTitle}>General</h5>
+                <h5 className={styles.asideItemTitle}>General
+                    {!isAside && <span className={styles.asideItemSmallTitle}>#</span>}
+                </h5>
 
                 <li className={`${styles.asideItem} ${query === "trendings" ? styles.activeItem : ""}`}
                     onClick={() => handleClick("trendings")}>
-                    <CiGrid42 className={styles.playlistIcon} />
+                    <HiTrendingUp className={styles.playlistIcon} />
                     <p className={styles.playlistTitle}>Trending Songs</p>
+
+                    {!isAside && (
+                        <div style={AsideSmallStyle}>
+                            <HiTrendingUp size={21} />
+                        </div>)}
                 </li>
 
                 <li className={`${styles.asideItem} ${query === 'songs' ? styles.activeItem : ""}`}
                     onClick={() => handleClick("songs")}>
-                    <CiGrid42 className={styles.playlistIcon} />
+                    <BsMusicNoteBeamed className={styles.playlistIcon} />
                     <p className={styles.playlistTitle}>Songs</p>
+
+                    {!isAside && (
+                        <div style={AsideSmallStyle}>
+                            <BiSolidPlaylist size={21} />
+                        </div>)}
                 </li>
 
                 <h5 className={styles.asideItemTitle}>Your Playlist
-                    <div className={styles.addPlaylist}>
-                        <FaPlus className={styles.addIcon} onClick={() => setIsNewPlaylist(true)} />
-                    </div>
+
+                    {!isAside ?
+                        <span className={styles.asideItemSmallTitle}>#</span> : (
+                            <div className={styles.addPlaylist}>
+                                <FaPlus className={styles.addIcon}
+                                    onClick={() => setIsNewPlaylist(true)} />
+                            </div>
+                        )}
                 </h5>
 
                 {playlists.length === 0 && !isNewPlaylist ? (
@@ -140,12 +168,13 @@ export default function SideMenu({ isAside, setIsAside }) {
                             onUpdate={handleUpdate}
                             onDelete={handleRemove}
                             isActive={query == playlist.title.trim().replace(/\s+/g, '-')}
+                            isAside={isAside}
                         />
                     ))
                 )}
 
                 {/* New Playlist */}
-                {isNewPlaylist &&
+                {isNewPlaylist && !isAside &&
                     <Playlist
                         onPlaylistClick={handleClick}
                         onCancel={handleCancel}
@@ -160,6 +189,11 @@ export default function SideMenu({ isAside, setIsAside }) {
                         onClick={() => handleClick("upload")}>
                         <FaCloudUploadAlt />
                         <p className={styles.playlistTitle}>Upload Songs</p>
+
+                        {!isAside && (
+                            <div className={styles.asideItemSmallItem}>
+                                <MdOutlineCloudUpload size={21} />
+                            </div>)}
                     </li>
                 )}
 
@@ -167,6 +201,11 @@ export default function SideMenu({ isAside, setIsAside }) {
                 <li className={styles.asideItem} onClick={() => logout()}>
                     <BiLogInCircle />
                     <p className={styles.playlistTitle}>Logout</p>
+
+                    {!isAside && (
+                        <div className={styles.asideItemSmallItem}>
+                            <IoMdLogOut size={21} />
+                        </div>)}
                 </li>
             </ul>
 

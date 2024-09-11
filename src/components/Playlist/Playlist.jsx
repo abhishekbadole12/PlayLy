@@ -4,8 +4,9 @@ import { CiGrid42 } from "react-icons/ci";
 import { FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 import { SlOptionsVertical } from "react-icons/sl";
+import { PiPlaylistBold } from "react-icons/pi";
 
-export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, onPlaylistClick, onCancel, onUpdate, onDelete, isActive, isNew = false }) {
+export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, onPlaylistClick, onCancel, onUpdate, onDelete, isActive, isNew = false, isAside }) {
     const { _id, title, songs } = playlist;
 
     const [inputTitle, setInputTitle] = useState(title || "");
@@ -66,9 +67,11 @@ export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, 
         setIsToggle(prev => !prev)
     }
 
+    const AsideSmallStyle = { marginLeft: 'auto', position: 'absolute', right: '1rem', }
+
     return (
         <li className={`${styles.asideItem} ${!!isActive ? styles.activeItem : ""}`} onClick={handleClick}>
-            <CiGrid42 className={styles.playlistIcon} />
+            <PiPlaylistBold className={styles.playlistIcon} style={!isAside ? AsideSmallStyle : ''} />
 
             {isEdit ? (
                 <input
@@ -88,12 +91,12 @@ export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, 
                 </div>
             ) : (
                 <div className={styles.iconActions}  >
-                    <SlOptionsVertical onClick={handleModalToggle} />
+                    {isAside && <SlOptionsVertical onClick={handleModalToggle} />}
                 </div>
             )}
 
             {/* Modal - menu */}
-            {isToggle && (
+            {isToggle && !isAside && (
                 <div className={styles.dropdown}>
                     <ul>
                         <li className={styles.dropdownItem} onClick={handleEditClick}>Edit</li>
@@ -101,6 +104,8 @@ export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, 
                     </ul>
                 </div>
             )}
+
+
         </li>
     )
 }

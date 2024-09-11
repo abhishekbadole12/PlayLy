@@ -104,6 +104,7 @@
 }
 
 .demoAccount label {
+    color: var(--primary-text-color);
     display: flex;
     align-items: center;
     gap: 0.35rem;

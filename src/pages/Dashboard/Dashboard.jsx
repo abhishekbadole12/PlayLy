@@ -76,7 +76,7 @@ export default function Dashboard() {
         <div className={styles.Dashboard}>
             <SideMenu isAside={memorizedAside} setIsAside={setIsAside} />
 
-            <section className={styles.section}>
+            <section className={`${styles.section} ${!isAside ? styles.sectionCollapsed : ''}`}>
                 <Header />
 
                 {/* Only Admin Can access Upload */}
@@ -88,16 +88,14 @@ export default function Dashboard() {
                             </div>
                             :
                             <div className={styles.mainContent}>
-                            <Table />
-                          </div>
-                            
-                            }
+                                <Table />
+                            </div>}
 
                         {mediaPlayer && (
                             <div className={styles.footer}>
-                                <Footer currentSong={currentSong} />
-                            </div>
-                        )}                    </>
+                                <Footer currentSong={currentSong} isAside={memorizedAside}/>
+                            </div>)}
+                    </>
                 }
             </section>
         </div >

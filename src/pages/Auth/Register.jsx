@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import styles from "./auth.module.css";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
 import useAuthStore from '../../store/authStore';
+import { showToast } from '../../utils/showToast';
 
 export default function Register() {
   const navigate = useNavigate()

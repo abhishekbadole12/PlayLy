@@ -15,7 +15,7 @@ import useSongStore from "../../store/songStore";
 import { IoCloseCircle } from "react-icons/io5";
 import { MoonLoader } from "react-spinners";
 
-export default function Footer() {
+export default function Footer({ isAside }) {
 
     const { currentSong, setCurrentSong, setMediaPlayer, isPlaying, setIsPlaying } = useContext(UserContext);
     const { songs } = useSongStore()
@@ -84,7 +84,7 @@ export default function Footer() {
     };
 
     return (
-        <footer>
+        <footer style={{ width: isAside ? '79.5%' : '93%' }}>
 
             {/* Progress bar */}
             <div className={styles.progressBarContainer}>
