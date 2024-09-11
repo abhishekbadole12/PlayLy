@@ -31,10 +31,14 @@ export default function App() {
               <Route path='/' element={<Dashboard />} />
               <Route path='/login' element={isAuthenticated() ? <Navigate to='/' /> : <Login />} />
               <Route path='/register' element={isAuthenticated() ? <Navigate to='/' /> : <Register />} />
+
               {/* Protected Routes */}
-              <Route element={<ProtectedRoutes auth={isAuthenticated()}/>}>
+              <Route element={<ProtectedRoutes auth={isAuthenticated()} />}>
                 <Route path='/dashboard/*' element={<Dashboard />} />
               </Route>
+
+              {/* Not Found Route */}
+              <Route path='*' element={<NotFound />} />
             </Routes>
           </Router>
           {/* Toast */}
