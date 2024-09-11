@@ -4,11 +4,14 @@ import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
 import Dashboard from './pages/Dashboard/Dashboard'
 import './App.css'
-import { AuthProvider } from './components/AuthContext'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for toast notifications
 import useAuthStore from './store/authStore'
+
+// Component's
+import { AuthProvider } from './components/AuthContext'
 import ProtectedRoutes from './components/PrivateRoute'
+import { NotFound } from './components/NotFound'
 
 // Context Created
 export const UserContext = createContext();
