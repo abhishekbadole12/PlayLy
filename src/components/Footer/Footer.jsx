@@ -18,48 +18,43 @@ import { MoonLoader } from "react-spinners";
 export default function Footer({ isAside }) {
 
     const { currentSong, setCurrentSong, setMediaPlayer, isPlaying, setIsPlaying } = useContext(UserContext);
-    const { songs } = useSongStore()
+    const { songs } = useSongStore();
 
     const [currentSongIndex, setCurrentSongIndex] = useState(null);
 
     const [progress, setProgress] = useState({ playedSeconds: 0, played: 0, loadedSeconds: 0, loaded: 0 });
-    const [player, setPlayer] = useState(null);
     const [volume, setVolume] = useState(localStorage.getItem('volumn') || 50);
+    const [player, setPlayer] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-    // Set the current song index when currentSong is set
     useEffect(() => {
         if (currentSong) {
             const index = songs.findIndex(song => song._id === currentSong._id);
             setCurrentSongIndex(index);
-            setProgress({ playedSeconds: 0, played: 0, loadedSeconds: 0, loaded: 0 })
+            // setProgress({ playedSeconds: 0, played: 0, loadedSeconds: 0, loaded: 0 })
         }
     }, [currentSong, songs]);
 
-    useEffect(() => {
-        if (player) {
-            player.seekTo(progress.played);
-        }
-    }, [progress.played, player]);
-
-    const handlePlayPause = () => {
+    const handlePlayPause = (e) => {
         setIsPlaying(prev => !prev);
     };
 
-    // Handle "Next" button click
+    // Handle Next button click
     const handleNext = () => {
         if (currentSongIndex !== null && currentSongIndex < songs.length - 1) {
             const nextSong = songs[currentSongIndex + 1];
-            setProgress({ playedSeconds: 0, played: 0, loadedSeconds: 0, loaded: 0 })
-            setCurrentSong(nextSong);  // Update currentSong with next song
+            // setProgress({ playedSeconds: 0, played: 0, loadedSeconds: 0, loaded: 0 })
+            setCurrentSong(nextSong);
+            setIsLoading(true);
         }
     };
 
-    // Handle "Previous" button click
+    // Handle Previous button click
     const handlePrevious = () => {
         if (currentSongIndex !== null && currentSongIndex > 0) {
             const previousSong = songs[currentSongIndex - 1];
-            setProgress({ playedSeconds: 0, played: 0, loadedSeconds: 0, loaded: 0 })
-            setCurrentSong(previousSong);  // Update currentSong with previous song
+            // setProgress({ playedSeconds: 0, played: 0, loadedSeconds: 0, loaded: 0 })
+            setCurrentSong(previousSong);
         }
     };
 
@@ -79,8 +74,8 @@ export default function Footer({ isAside }) {
         setCurrentSong(null);
     }
 
-    const handleEnded = () => {
-        handleNext();
+    const handleReady = () => {
+        setIsLoading(false);
     };
 
     return (
@@ -88,24 +83,19 @@ export default function Footer({ isAside }) {
 
             {/* Progress bar */}
             <div className={styles.progressBarContainer}>
-
                 <div className={styles.progressBar}>
-                    {/* Full song background */}
                     <div className={styles.backGrey} />
-
-                    {/* Loaded part (loadedSeconds) */}
                     <div
                         className={styles.loaded}
                         style={{
-                            width: `${(progress.loaded / 1) * 100}%`,
+                            width: `${progress.loaded * 100}%`,
                         }}
                     />
 
-                    {/* Played part (playedSeconds) */}
                     <div
                         className={styles.played}
                         style={{
-                            width: `${(progress.played / 1) * 100}%`,
+                            width: `${progress.played * 100}%`,
                         }}
                     />
                 </div>
@@ -113,11 +103,10 @@ export default function Footer({ isAside }) {
 
             {/* Song Menu */}
             <div className={styles.footerBottom}>
-
                 {/* Song Album Img */}
                 <div className={styles.songName}>
                     <div className={styles.songImage}>
-                        <img src={currentSong?.imageUrl || songImg} alt="song-image" />
+                        <img src={currentSong?.imageUrl || songImg} alt="album-image" />
                     </div>
                     <ul className={styles.songDetails}>
                         <li>
@@ -145,7 +134,9 @@ export default function Footer({ isAside }) {
                         url={currentSong?.firebaseUrl}
                         playing={isPlaying}
                         onProgress={handleProgress}
-                        onEnded={handleEnded}
+                        onEnded={handleNext}
+                        onReady={handleReady}
+                        onBuffer={() => setIsLoading(true)}
                         ref={setPlayer}
                         width="0"
                         height="0"
@@ -156,22 +147,22 @@ export default function Footer({ isAside }) {
 
                     <div className={styles.mainBtn}>
 
-                        {currentSong !== null && isPlaying ? (
+                        {currentSong && isPlaying ? (
                             <FaCirclePause className={`${styles.playLogicButton} ${styles.pauseIcon}`} onClick={handlePlayPause} />
                         ) : (
                             <FaCirclePlay className={`${styles.playLogicButton} ${styles.playIcon}`} onClick={handlePlayPause} />
                         )}
 
-                        {/* <div style={{
+                        {isLoading && <div style={{
                             position: 'absolute',
                             left: '50%',
                             top: '47%',
                             transform: 'translate(-50%, -50%)',
-                        }}>
+                        }} onClick={handlePlayPause}>
                             <MoonLoader size={47} />
-                        </div> */}
+                        </div>
+                        }
                     </div>
-
 
                     <MdOutlineSkipNext className={styles.playLogicButton} onClick={handleNext} />
                 </div>
