@@ -69,9 +69,7 @@ const useSongStore = create((set) => ({
         formData.append("files", file, file.name);
       });
 
-      const response = await api.post("/songs/upload", formData, {
-        withCredentials: true,
-      });
+      const response = await api.post("/songs/upload", formData);
       if (response.status === 201 && response.data) {
         set({ isUploading: false, isLoading: false, isSucceed: true });
         return true;

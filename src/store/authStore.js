@@ -15,7 +15,7 @@ const useAuthStore = create(
 
       // Login User
       login: async ({ email, password }) => {
-        set({ isLoading: true });
+        set({ isLoading: true, isError: false });
         try {
           const { data, status } = await api.post("/users/login", {
             email,
@@ -72,7 +72,7 @@ const useAuthStore = create(
         });
 
         if (navigate) {
-          navigate("/login"); 
+          navigate("/login");
         }
       },
 

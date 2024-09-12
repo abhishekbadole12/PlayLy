@@ -53,6 +53,7 @@ export default function Login() {
 
     } catch (error) {
       setUserDetails({ email: "", password: "" })
+      setIsDemoAccount(false)
       setErrorMsg(error?.message)
     }
   }
