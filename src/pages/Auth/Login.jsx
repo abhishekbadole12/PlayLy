@@ -3,6 +3,7 @@ import styles from "./auth.module.css";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuthStore from '../../store/authStore';
+import { validateLoginForm } from '../../utils/loginValidationSchema';
 
 export default function Login() {
   const navigate = useNavigate()
@@ -27,6 +28,8 @@ export default function Login() {
 
   // handle change
   const handleChange = (e) => {
+    setErrorMsg(null);
+
     setUserDetails((prev) => ({
       ...prev, [e.target.name]: e.target.value
     }))
@@ -45,7 +48,16 @@ export default function Login() {
 
   // handle submit
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+
+    // Validate form using the utility
+    const { isValid, errors } = await validateLoginForm(userDetails);
+    if (!isValid) {
+      const errorMessages = Object.values(errors).join(' ');
+      setErrorMsg(errorMessages);
+      return;
+    }
+
     try {
       await login(userDetails);
       setUserDetails({ email: "", password: "" })
@@ -100,7 +112,7 @@ export default function Login() {
 
         <p className={styles.label}>~ To register <Link to="/register"><i>Click here</i></Link></p>
 
-        <button type='submit'>{isLoading ? 'Loading...' : 'Sign In'}</button>
+        <button type='submit' disabled={isLoading}>{isLoading ? 'Loading...' : 'Sign In'}</button>
 
       </form>
     </div>

@@ -4,14 +4,15 @@ import styles from "./auth.module.css";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import useAuthStore from '../../store/authStore';
 import { showToast } from '../../utils/showToast';
+import { validateRegistrationForm } from '../../utils/validateRegistrationForm';
 
 export default function Register() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   const { register, isError, isLoading } = useAuthStore()
 
   const [userDetails, setUserDetails] = useState({ username: '', email: '', password: '', confirm_password: '' })
-  const [error, setError] = useState(null)
-
+  const [errorMsg, setErrorMsg] = useState(null)
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -20,6 +21,8 @@ export default function Register() {
 
   // handle change
   const handleChange = (e) => {
+    setErrorMsg(null);
+
     setUserDetails((prev) => ({
       ...prev, [e.target.name]: e.target.value
     }))
@@ -27,7 +30,15 @@ export default function Register() {
 
   // handle submit
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+
+    const { isValid, errors } = await validateRegistrationForm(userDetails);
+    if (!isValid) {
+      const errorMessages = Object.values(errors).join(' ');
+      setErrorMsg(errorMessages);
+      return;
+    }
+
     try {
       await register(userDetails)
       showToast('User Registered, Redirecting to Login page')
@@ -36,8 +47,8 @@ export default function Register() {
       }, 1500);
       setUserDetails({ username: "", email: '', password: '', confirm_password: '' })
     } catch (error) {
+      setErrorMsg(error?.message)
       setUserDetails({ username: "", email: '', password: '', confirm_password: '' })
-      setError(error?.message)
     }
   }
 
@@ -62,9 +73,9 @@ export default function Register() {
             value={userDetails.password}
             onChange={handleChange}
           />
-          <div className={styles.eyeIcon} onClick={togglePasswordVisibility}>
+          {userDetails.password != '' && <div className={styles.eyeIcon} onClick={togglePasswordVisibility}>
             {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-          </div>
+          </div>}
         </div>
 
         <div className={styles.passwordContainer}>
@@ -76,11 +87,11 @@ export default function Register() {
             value={userDetails.confirm_password}
             onChange={handleChange}
           />
-          <div className={styles.eyeIcon} onClick={togglePasswordVisibility}>
+          {userDetails.confirm_password != '' && <div className={styles.eyeIcon} onClick={togglePasswordVisibility}>
             {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-          </div>
+          </div>}
 
-          {isError && <p className={styles.errorTag}>{error}</p>}
+          {isError && <p className={styles.errorTag}>{errorMsg}</p>}
         </div>
 
         <p className={styles.label}>~ Already have account <Link to="/login"><i>Click here</i></Link></p>
