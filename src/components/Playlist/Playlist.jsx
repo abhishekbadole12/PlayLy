@@ -96,7 +96,7 @@ export default function Playlist({ playlist = { _id: 0, title: '', songs: [] }, 
             )}
 
             {/* Modal - menu */}
-            {isToggle && !isAside && (
+            {isToggle && isAside && (
                 <div className={styles.dropdown}>
                     <ul>
                         <li className={styles.dropdownItem} onClick={handleEditClick}>Edit</li>
